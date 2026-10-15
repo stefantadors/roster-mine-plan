@@ -1,0 +1,3324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roster Mine Plan</title>
+<style>
+  :root {
+    --bg: #f1f5f9;
+    --surface: #ffffff;
+    --surface-alt: #f8fafc;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --border: #cbd5e1;
+    --border-light: #e2e8f0;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --tile-bg: #f1f5f9;
+    --tile-border: #cbd5e1;
+    --tile-text: #64748b;
+    --tile-active-bg: #1e293b;
+    --tile-active-text: #ffffff;
+    --tile-active-border: #0f172a;
+    --ltp-bg: #dbeafe;
+    --ltp-text: #1e40af;
+    --ltp-active-bg: #2563eb;
+    --ltp-active-text: #ffffff;
+    --stp-bg: #fef3c7;
+    --stp-text: #92400e;
+    --stp-active-bg: #d97706;
+    --stp-active-text: #ffffff;
+    --w-bg: #bbf7d0;
+    --w-text: #065f46;
+    --tri-bg: #fde047;
+    --tri-text: #854d0e;
+    --tro-bg: #fed7aa;
+    --tro-text: #9a3412;
+    --o-bg: #e0e7ff;
+    --o-text: #3730a3;
+    --a-bg: #f3e8ff;
+    --a-text: #6b21a8;
+    --orr-bg: #cffafe;
+    --orr-text: #155e75;
+    --bst-bg: #bae6fd;
+    --bst-text: #0369a1;
+    --x-bg: #ffe4e6;
+    --x-text: #9f1239;
+    --h15-bg: #000000;
+    --h15-text: #ffffff;
+    --danger: #dc2626;
+    --ok: #059669;
+    --name-ltp-bg: #eff6ff;
+    --name-stp-bg: #fffbeb;
+    --onsite-hdr-bg: #f1f5f9;
+    --cov-low-bg: #fca5a5;
+    --cov-low-text: #7f1d1d;
+    --cov-mid-bg: #fde047;
+    --cov-mid-text: #713f12;
+    --cov-ok-bg: #86efac;
+    --cov-ok-text: #14532d;
+  }
+
+  /* COOL DARK MODE THEME */
+  body.dark-mode {
+    --bg: #060911;
+    --surface: #0f172a;
+    --surface-alt: #131c31;
+    --panel-bg: rgba(15, 23, 42, 0.96);
+    --border: #1e293b;
+    --border-light: #1e293b;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --tile-bg: #0b1120;
+    --tile-border: #1e293b;
+    --tile-text: #475569;
+    --tile-active-bg: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --tile-active-text: #ffffff;
+    --tile-active-border: #60a5fa;
+    --ltp-bg: rgba(37, 99, 235, 0.18);
+    --ltp-text: #60a5fa;
+    --ltp-active-bg: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    --ltp-active-text: #ffffff;
+    --stp-bg: rgba(217, 119, 6, 0.18);
+    --stp-text: #fbbf24;
+    --stp-active-bg: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    --stp-active-text: #ffffff;
+    --w-bg: rgba(16, 185, 129, 0.22);
+    --w-text: #34d399;
+    --tri-bg: rgba(245, 158, 11, 0.28);
+    --tri-text: #fcd34d;
+    --tro-bg: rgba(249, 115, 22, 0.28);
+    --tro-text: #fdba74;
+    --o-bg: rgba(99, 102, 241, 0.22);
+    --o-text: #a5b4fc;
+    --a-bg: rgba(168, 85, 247, 0.25);
+    --a-text: #d8b4fe;
+    --orr-bg: rgba(6, 182, 212, 0.25);
+    --orr-text: #67e8f9;
+    --bst-bg: rgba(14, 165, 233, 0.26);
+    --bst-text: #7dd3fc;
+    --x-bg: rgba(244, 63, 94, 0.25);
+    --x-text: #fda4af;
+    --h15-bg: #000000;
+    --h15-text: #ffffff;
+    --danger: #f87171;
+    --ok: #34d399;
+    --name-ltp-bg: #0d1b38;
+    --name-stp-bg: #231a0b;
+    --onsite-hdr-bg: #0b1120;
+    --cov-low-bg: rgba(220, 38, 38, 0.38);
+    --cov-low-text: #fecaca;
+    --cov-mid-bg: rgba(202, 138, 4, 0.35);
+    --cov-mid-text: #fef08a;
+    --cov-ok-bg: rgba(5, 150, 105, 0.35);
+    --cov-ok-text: #a7f3d0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", Calibri, "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 12.5px;
+    line-height: 1.35;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  /* Compact Sticky Top Navigation Bar */
+  .top-bar {
+    background: #090d16;
+    color: #fff;
+    height: 42px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 120;
+    border-bottom: 1px solid #1e293b;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .app-title {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    background: linear-gradient(90deg, #60a5fa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .nav-tab {
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.14s;
+  }
+  .nav-tab:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .nav-tab.active {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+    border-color: #60a5fa;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
+  }
+  .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #131c31;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .user-pill select {
+    background: transparent;
+    border: none;
+    color: #38bdf8;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 0;
+    cursor: pointer;
+  }
+  .user-pill select option {
+    background: #0f172a;
+    color: #f8fafc;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.14s;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-primary { background: #2563eb; color: #fff; border-color: #3b82f6; }
+  .btn-dark { background: #1e293b; color: #f8fafc; border-color: #334155; }
+  .btn-dark:hover { background: #334155; border-color: #475569; }
+  .btn-undo { background: #f59e0b; color: #090d16; border-color: #fbbf24; font-weight: 700; }
+  .btn-danger { background: rgba(220, 38, 38, 0.18); color: var(--danger); border-color: rgba(220, 38, 38, 0.4); }
+  .btn-theme {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #38bdf8;
+    border: 1px solid #38bdf8;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+  }
+  .btn-sm { padding: 2px 7px; font-size: 11px; }
+
+  .main-container {
+    padding: 10px 16px 40px;
+  }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* FROZEN / STICKY TOP CONTROL PANEL ON MASTER CALENDAR */
+  .excel-top-panel {
+    position: sticky;
+    top: 42px;
+    z-index: 95;
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    overflow-x: auto;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  /* Strict Legend Box (Left) */
+  .legend-box {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+  .legend-box-header {
+    background: #0f172a;
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 4px 10px;
+    text-align: center;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid var(--border);
+  }
+  table.legend-table {
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  table.legend-table td {
+    border: 1px solid var(--border-light);
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  table.legend-table td.code-col {
+    font-weight: 700;
+    text-align: center;
+    min-width: 72px;
+  }
+
+  /* Sleek Top-to-Bottom Clickable Toggle Columns (NO Checkboxes) */
+  .selector-matrix {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+  .sel-column {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    min-width: 148px;
+    overflow: hidden;
+  }
+  .sel-column.sel-col-narrow {
+    min-width: 90px;
+  }
+  .sel-col-header {
+    padding: 5px 10px;
+    font-weight: 800;
+    font-size: 11.5px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.14s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .sel-col-header.hdr-ltp {
+    background: var(--ltp-bg);
+    color: var(--ltp-text);
+  }
+  .sel-col-header.hdr-ltp.active {
+    background: var(--ltp-active-bg);
+    color: var(--ltp-active-text);
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.2);
+  }
+  .sel-col-header.hdr-stp {
+    background: var(--stp-bg);
+    color: var(--stp-text);
+  }
+  .sel-col-header.hdr-stp.active {
+    background: var(--stp-active-bg);
+    color: var(--stp-active-text);
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.2);
+  }
+  .sel-col-header.hdr-neutral {
+    background: var(--tile-bg);
+    color: var(--text);
+  }
+  .sel-col-header.hdr-neutral.active {
+    background: var(--tile-active-bg);
+    color: var(--tile-active-text);
+  }
+
+  .sel-list {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    gap: 3px;
+  }
+  .sel-months-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 6px;
+    padding: 5px;
+  }
+  .toggle-tile {
+    padding: 3.5px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--tile-border);
+    background: var(--tile-bg);
+    color: var(--tile-text);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    text-align: left;
+    transition: all 0.12s ease;
+  }
+  .toggle-tile.tile-center { text-align: center; }
+  .toggle-tile:hover {
+    border-color: var(--primary);
+    color: var(--text);
+  }
+  .toggle-tile.active {
+    background: var(--tile-active-bg);
+    color: var(--tile-active-text);
+    border-color: var(--tile-active-border);
+    font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+  .toggle-tile.tile-ltp.active {
+    background: var(--ltp-active-bg);
+    color: var(--ltp-active-text);
+    border-color: #60a5fa;
+  }
+  .toggle-tile.tile-stp.active {
+    background: var(--stp-active-bg);
+    color: var(--stp-active-text);
+    border-color: #fbbf24;
+  }
+
+  /* Month Calendar Grid Cards */
+  .month-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .month-card-header {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .month-card-header h3 { font-size: 13px; font-weight: 700; color: #38bdf8; }
+  .holiday-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .holiday-chip {
+    background: rgba(220, 38, 38, 0.25);
+    border: 1px solid rgba(248, 113, 113, 0.5);
+    color: #fca5a5;
+    padding: 1px 7px;
+    border-radius: 99px;
+    font-size: 10.5px;
+    font-weight: 600;
+  }
+  .bday-chip {
+    background: #facc15;
+    border: 1px solid #eab308;
+    color: #0f172a;
+    padding: 1px 8px;
+    border-radius: 99px;
+    font-size: 10.5px;
+    font-weight: 800;
+  }
+
+  .table-scroll { overflow-x: auto; width: 100%; }
+  table.roster-grid {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+    table-layout: fixed;
+  }
+  table.roster-grid th,
+  table.roster-grid td {
+    border: 1px solid var(--border);
+    padding: 3px 2px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  table.roster-grid th.col-no { width: 28px; background: var(--surface-alt); }
+  table.roster-grid th.col-name {
+    width: 168px;
+    text-align: left;
+    padding-left: 7px;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background: var(--surface-alt);
+  }
+  table.roster-grid td.col-name {
+    text-align: left;
+    padding-left: 7px;
+    font-weight: 600;
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    background: var(--surface);
+  }
+  table.roster-grid td.col-name.name-ltp { background: var(--name-ltp-bg); }
+  table.roster-grid td.col-name.name-stp { background: var(--name-stp-bg); }
+  table.roster-grid th.col-sec { width: 42px; background: var(--surface-alt); }
+  table.roster-grid th.col-stat { width: 38px; background: var(--surface-alt); }
+  table.roster-grid th.col-day { width: 46px; background: var(--surface-alt); }
+
+  .dow-header th {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--surface-alt);
+    padding: 2px 1px;
+  }
+  .th-weekend { background: rgba(220, 38, 38, 0.16) !important; color: var(--danger) !important; }
+  .th-holiday { background: #dc2626 !important; color: #ffffff !important; font-weight: 800 !important; }
+  /* Birthday prioritized over Holiday (Yellow) */
+  .th-birthday { background: #facc15 !important; color: #0f172a !important; font-weight: 900 !important; }
+
+  .sec-tag {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .sec-LTP { background: var(--ltp-bg); color: var(--ltp-text); }
+  .sec-STP { background: var(--stp-bg); color: var(--stp-text); }
+
+  
+  /* Google Docs Style Live Presence / Active Cell Highlight */
+  td.day-cell.gdocs-active {
+    outline: 2px solid #2563eb !important;
+    position: relative;
+    z-index: 8;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.45);
+  }
+  .gdocs-tag {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 8.5px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    z-index: 12;
+  }
+  body.dark-mode td.day-cell.gdocs-active {
+    outline: 2px solid #38bdf8 !important;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+  }
+  body.dark-mode .gdocs-tag {
+    background: #0284c7;
+  }
+
+  /* Daily Status Cells */
+  td.day-cell {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 10px;
+    position: relative;
+  }
+  td.day-cell:hover { outline: 2px solid var(--primary); z-index: 4; }
+  .cell-W { background: var(--w-bg); color: var(--w-text); }
+  .cell-TRI { background: var(--tri-bg); color: var(--tri-text); font-weight: 700; }
+  .cell-TRO { background: var(--tro-bg); color: var(--tro-text); font-weight: 700; }
+  .cell-O { background: var(--o-bg); color: var(--o-text); }
+  .cell-A { background: var(--a-bg); color: var(--a-text); }
+  .cell-ORR { background: var(--orr-bg); color: var(--orr-text); }
+  .cell-BST { background: var(--bst-bg); color: var(--bst-text); font-weight: 700; }
+  .cell-X { background: var(--x-bg); color: var(--x-text); }
+  .cell-H15 {
+    background: #000000 !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
+  }
+  .cell-seed { text-decoration: underline; }
+  .comment-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-top: 5px solid #ef4444;
+  }
+
+  tr.onsite-row td { font-weight: 700; font-size: 10.5px; background: var(--onsite-hdr-bg); }
+  td.cov-low { background: var(--cov-low-bg) !important; color: var(--cov-low-text) !important; }
+  td.cov-mid { background: var(--cov-mid-bg) !important; color: var(--cov-mid-text) !important; }
+  td.cov-ok { background: var(--cov-ok-bg) !important; color: var(--cov-ok-text) !important; }
+
+  /* Card & Data Tables */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .card-header h2 { font-size: 14px; font-weight: 700; }
+
+  /* Frozen / Sticky Header in R&R Balance Window */
+  .rr-sticky-pane {
+    position: sticky;
+    top: 42px;
+    z-index: 90;
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  table.data-table th,
+  table.data-table td {
+    border: 1px solid var(--border);
+    padding: 6px 9px;
+    text-align: left;
+  }
+  table.data-table th {
+    background: var(--surface-alt);
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--text);
+  }
+  table.data-table tr:nth-child(even) { background: var(--surface-alt); }
+  .num { text-align: right !important; font-variant-numeric: tabular-nums; }
+  .bal-pos { color: var(--ok); font-weight: 700; }
+  .bal-neg { color: var(--danger); font-weight: 700; }
+
+  input[type="text"], input[type="date"], input[type="number"], select, textarea {
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: inherit;
+    background: var(--surface-alt);
+    color: var(--text);
+  }
+
+  /* Modals */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.72);
+    backdrop-filter: blur(3px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 16px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 18px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+    color: var(--text);
+  }
+  .modal.modal-lg { max-width: 860px; }
+  .modal h3 { font-size: 15px; margin-bottom: 12px; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; }
+  .form-group { margin-bottom: 10px; }
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 11.5px;
+    margin-bottom: 3px;
+    color: var(--text-muted);
+  }
+  .form-group input[type="text"], .form-group input[type="date"], .form-group input[type="number"], .form-group select, .form-group textarea {
+    width: 100%;
+  }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  /* Holiday & Birthday Calendar Picker Inside Modal */
+  .hol-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .hol-cal-dow {
+    text-align: center;
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 4px 0;
+  }
+  .hol-cal-day {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    min-height: 52px;
+    padding: 4px;
+    cursor: pointer;
+    background: var(--surface-alt);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 11px;
+  }
+  .hol-cal-day:hover { border-color: var(--primary); }
+  .hol-cal-day.is-hol {
+    background: rgba(220, 38, 38, 0.25);
+    border-color: #dc2626;
+    color: #fca5a5;
+  }
+  body:not(.dark-mode) .hol-cal-day.is-hol {
+    background: #fee2e2;
+    color: #7f1d1d;
+  }
+  /* Birthday prioritized over Holiday in Calendar Picker too (Yellow) */
+  .hol-cal-day.is-bday {
+    background: #facc15 !important;
+    border-color: #eab308 !important;
+    color: #0f172a !important;
+  }
+  .hol-cal-day.selected-day {
+    outline: 2px solid var(--primary);
+  }
+  .hol-day-name {
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.15;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Audit Log Cards */
+  .audit-entry {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface-alt);
+    margin-bottom: 8px;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: #2563eb;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 300;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body class="dark-mode">
+
+<header class="top-bar">
+  <div class="top-bar-left">
+    <div class="app-title">Roster Mine Plan</div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('calendar', this)">Master Calendar</button>
+      <button class="nav-tab" onclick="switchTab('ledger', this)">R&amp;R Balance</button>
+      <button class="nav-tab" onclick="switchTab('audit', this)">Audit Logs</button>
+    </div>
+  </div>
+  <div class="top-bar-right">
+    <button class="btn btn-primary" id="linkServerFileBtn" onclick="connectServerHtmlFile()" title="Select this .html file in your shared server folder once so every edit auto-saves directly into the shared HTML file for all PCs">🔗 Link Server HTML File</button>
+    <button class="btn btn-dark" id="saveHtmlManualBtn" onclick="saveToSelfHtmlFile()" title="Save all changes directly into the HTML file">💾 Save HTML</button>
+    <button class="btn btn-theme" id="themeToggleBtn" onclick="toggleDarkMode()">☀️ Light Mode</button>
+    <button class="btn btn-undo" id="undoBtn" onclick="performUndo()" disabled title="Undo last change (Ctrl+Z)">↶ Undo (0)</button>
+    <button class="btn btn-dark" id="redoBtn" onclick="performRedo()" disabled title="Redo change (Ctrl+Y)">↷ Redo (0)</button>
+    <button class="btn btn-dark" onclick="openEngineersModal()">👷 Manage Engineers</button>
+    <button class="btn btn-dark" onclick="openHolidaysModal()">📅 Holiday Addition</button>
+  </div>
+</header>
+
+<main class="main-container">
+
+  <!-- WINDOW: MASTER CALENDAR -->
+  <section id="tab-calendar" class="tab-pane active">
+    <div class="excel-top-panel">
+      <!-- Strict Roster List / Legend -->
+      <div class="legend-box">
+        <div class="legend-box-header">Roster List</div>
+        <table class="legend-table">
+          <tbody>
+            <tr><td class="code-col cell-TRI">W-xx ✈</td><td>Travel In</td></tr>
+            <tr><td class="code-col cell-W">W-xx</td><td>Work Day</td></tr>
+            <tr><td class="code-col cell-TRO">W-xx ✈</td><td>Travel Out</td></tr>
+            <tr><td class="code-col cell-O">O-xx</td><td>Cuti</td></tr>
+            <tr><td class="code-col cell-A">A-xx</td><td>Annual Leave</td></tr>
+            <tr><td class="code-col cell-ORR">ORR-xx</td><td>Outstanding R&amp;R</td></tr>
+            <tr><td class="code-col cell-BST">BST-xx</td><td>Business Trip</td></tr>
+            <tr><td class="code-col cell-X">X-xx</td><td>Others (Please add note)</td></tr>
+            <tr><td class="code-col cell-H15">W-xx</td><td>Hari ke-15</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Sleek Clickable Toggle Columns (Top-to-Bottom, No Checkboxes) -->
+      <div class="selector-matrix">
+        <!-- LTP Column -->
+        <div class="sel-column">
+          <div class="sel-col-header hdr-ltp" id="hdrGroupLTP" onclick="toggleGroupTile('LTP')">LTP</div>
+          <div class="sel-list" id="tileListLTP"></div>
+        </div>
+
+        <!-- STP Column -->
+        <div class="sel-column">
+          <div class="sel-col-header hdr-stp" id="hdrGroupSTP" onclick="toggleGroupTile('STP')">STP</div>
+          <div class="sel-list" id="tileListSTP"></div>
+        </div>
+
+        <!-- Months Column (Jan-Jun & Jul-Dec top-to-bottom) -->
+        <div class="sel-column">
+          <div class="sel-col-header hdr-neutral" id="hdrAllMonths" onclick="toggleAllMonthsTile()">Month</div>
+          <div class="sel-months-split" id="tileListMonths"></div>
+        </div>
+
+        <!-- Years Column (Top-to-bottom; +1 Year is inside the Hide/Show window) -->
+        <div class="sel-column sel-col-narrow">
+          <div class="sel-col-header hdr-neutral" onclick="openYearsVisModal()" title="Click to Hide/Show Years or Add +1 Year">
+            <span>Year</span>
+            <span style="font-size:10px; opacity:0.8;">⚙</span>
+          </div>
+          <div class="sel-list" id="tileListYears"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="calendarMonthsContainer"></div>
+  </section>
+
+  <!-- WINDOW: INDIVIDUAL R&R BALANCE & LEAVE ANALYSIS -->
+  <section id="tab-ledger" class="tab-pane">
+    <!-- Frozen / Sticky Top Pane for R&R Balance -->
+    <div class="rr-sticky-pane">
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h2 style="font-size:14.5px; font-weight:800;">RR/Leave Analysis of</h2>
+          <select id="ledgerEmpSelect" onchange="renderEmployeeLedger()" style="font-weight:700; font-size:13.5px;"></select>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <button class="btn btn-sm" id="btnRRCurrentYear" onclick="setRRYearFilter('CURRENT')">Show only 2026</button>
+          <button class="btn btn-sm btn-primary" id="btnRRAllYears" onclick="setRRYearFilter('ALL')">Show all</button>
+          <button class="btn btn-sm btn-dark" onclick="openAddManualRRModal()">+ Add Manual Row (R&amp;R Only)</button>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; font-size:12px; flex-wrap:wrap; align-items:center;">
+        <div><strong>Days Working:</strong> <span id="metaDaysWorking">28</span></div>
+        <div><strong>Days Rest:</strong> <span id="metaDaysRest">14</span></div>
+        <div><strong>Commencement date:</strong> <span id="metaCommDate">—</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:0; overflow:hidden;">
+      <div class="table-scroll">
+        <table class="data-table" id="empLedgerTable">
+          <thead>
+            <tr>
+              <th>Start Working</th>
+              <th>Finish Working</th>
+              <th class="num">Working Days</th>
+              <th class="num">RR Ent'ment</th>
+              <th>Start RR</th>
+              <th>Finish RR</th>
+              <th class="num">RR Taken</th>
+              <th class="num">Annual Leave</th>
+              <th class="num">RR Balance</th>
+              <th>TRIP SEQUENCE</th>
+              <th>Remarks</th>
+              <th>Edit (R&amp;R Only)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- WINDOW: AUDIT LOGS -->
+  <section id="tab-audit" class="tab-pane">
+    <div class="card">
+      <div class="card-header">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h2>Audit Logs</h2>
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-sm" id="btnAuditToday" onclick="setAuditFilter('TODAY')">Show changes today</button>
+            <button class="btn btn-sm" id="btnAuditMonth" onclick="setAuditFilter('MONTH')">Show changes this month</button>
+            <button class="btn btn-sm btn-primary" id="btnAuditAll" onclick="setAuditFilter('ALL')">Show all logs</button>
+          </div>
+        </div>
+        <button class="btn btn-sm" onclick="clearAuditLog()">Clear Logs</button>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table" id="auditLogTable">
+          <thead>
+            <tr>
+              <th style="width:150px;">Timestamp</th>
+              <th style="width:190px;">Engineer / Target</th>
+              <th>Action Details</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- MODAL 1: EDIT MASTER CALENDAR CELL -->
+<div class="modal-backdrop" id="cellModal">
+  <div class="modal">
+    <h3 id="cellModalTitle">Edit Roster Cell</h3>
+    <input type="hidden" id="modalEmpId">
+    <input type="hidden" id="modalDateStr">
+    <div class="form-group">
+      <label>Roster Status Code</label>
+      <select id="modalActionType" onchange="toggleCustomCodeInput()">
+        <option value="CONTINUE">Auto-Continue Previous Day (Formula)</option>
+        <option value="W">W — Work Day</option>
+        <option value="BST">BST — Business Trip</option>
+        <option value="O">O — Cuti</option>
+        <option value="A">A — Annual Leave</option>
+        <option value="ORR">ORR — Outstanding R&amp;R</option>
+        <option value="X">X — Others (Please add note)</option>
+        <option value="CUSTOM">Custom Code...</option>
+        <option value="STOP">Clear / Blank Cell Forward</option>
+      </select>
+    </div>
+    <div class="form-group" id="customCodeGroup" style="display:none;">
+      <label>Custom Code</label>
+      <input type="text" id="modalCustomCode" placeholder="W-15">
+    </div>
+    <div class="form-group" style="background:var(--surface-alt); padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+      <label style="display:flex; align-items:center; gap:7px; font-weight:700; color:var(--text); cursor:pointer; margin:0;">
+        <input type="checkbox" id="modalH15Check"> Hari ke-15
+      </label>
+      <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+        Still counts as a Work Day, displays bold white font on black fill, and excludes engineer from LTP/STP Onsite count on this day.
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Cell Comment / Remark</label>
+      <textarea id="modalComment" rows="2"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeCellModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCellModal()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: EDIT R&R ROW (DOES NOT AFFECT MASTER CALENDAR) -->
+<div class="modal-backdrop" id="rrRowModal">
+  <div class="modal">
+    <h3 id="rrModalTitle">Edit R&amp;R Balance Row (R&amp;R Window Only)</h3>
+    <input type="hidden" id="rrModalKey">
+    <input type="hidden" id="rrModalIsManual">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <div class="form-group">
+        <label>Start Working</label>
+        <input type="date" id="rrStartWork">
+      </div>
+      <div class="form-group">
+        <label>Finish Working</label>
+        <input type="date" id="rrFinishWork">
+      </div>
+      <div class="form-group">
+        <label>Start RR</label>
+        <input type="date" id="rrStartRR">
+      </div>
+      <div class="form-group">
+        <label>Finish RR</label>
+        <input type="date" id="rrFinishRR">
+      </div>
+      <div class="form-group">
+        <label>Manual Annual Leave Input (e.g. +14)</label>
+        <input type="text" id="rrALInput" placeholder="+14 or 0">
+      </div>
+      <div class="form-group">
+        <label>Manual RR Balance Input (e.g. +1 or -0.5)</label>
+        <input type="text" id="rrAdjInput" placeholder="+1 or 0">
+      </div>
+      <div class="form-group">
+        <label>TRIP SEQUENCE</label>
+        <input type="text" id="rrTripSeq">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Remarks</label>
+      <input type="text" id="rrRemarks">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="rrResetCalBtn" style="margin-right:auto; display:none;" onclick="resetRRRowToCalendar()">↺ Reset Row to Calendar</button>
+      <button class="btn" onclick="closeRRRowModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveRRRowModal()">Save to R&amp;R Table</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: ADD / RENAME / HIDE ENGINEERS WINDOW -->
+<div class="modal-backdrop" id="engineersModal">
+  <div class="modal modal-lg">
+    <h3>👷 Manage Engineers (Add, Rename, or Hide)</h3>
+    <div style="background:var(--surface-alt); border:1px solid var(--border); border-radius:6px; padding:12px; margin-bottom:14px;">
+      <h4 style="margin-bottom:8px; font-size:13px;">Add New Engineer</h4>
+      <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap:8px; align-items:end;">
+        <div class="form-group" style="margin:0;">
+          <label>Engineer Name</label>
+          <input type="text" id="newEmpName" placeholder="Full Name">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Section</label>
+          <select id="newEmpSection">
+            <option value="LTP">LTP</option>
+            <option value="STP">STP</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Start Month</label>
+          <select id="newEmpMonth">
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Start Year</label>
+          <select id="newEmpYear"></select>
+        </div>
+        <button class="btn btn-primary" onclick="addNewEngineer()">+ Add Engineer</button>
+      </div>
+      <div style="margin-top:8px; display:flex; align-items:center; gap:12px; font-size:11.5px; color:var(--text-muted);">
+        <label style="display:inline-flex; align-items:center; gap:5px;">
+          Start Day of Month: <input type="number" id="newEmpDay" value="1" min="1" max="31" style="width:55px; padding:2px 6px;">
+        </label>
+        <label style="display:inline-flex; align-items:center; gap:5px; cursor:pointer;">
+          <input type="checkbox" id="newEmpAutoSeed" checked> Start with W-01 on commencement date
+        </label>
+      </div>
+    </div>
+
+    <h4 style="margin-bottom:8px; font-size:13px;">Existing Engineers (Rename or Hide Resigned Engineers)</h4>
+    <div class="table-scroll" style="max-height:340px; overflow-y:auto;">
+      <table class="data-table" id="manageEngineersTable">
+        <thead>
+          <tr>
+            <th>Engineer Name</th>
+            <th>Section</th>
+            <th>Start Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeEngineersModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 4: HOLIDAY & BIRTHDAY ADDITION WINDOW (CALENDAR FORMAT) -->
+<div class="modal-backdrop" id="holidaysModal">
+  <div class="modal modal-lg">
+    <h3>📅 Holiday &amp; Birthday Addition</h3>
+    <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:10px;">
+      <span style="display:inline-block; padding:1px 6px; border-radius:4px; background:#facc15; color:#0f172a; font-weight:800;">🎂 Birthdays (Yellow — Prioritized)</span> repeat every year automatically (unless the engineer is hidden).
+      <span style="display:inline-block; padding:1px 6px; border-radius:4px; background:#dc2626; color:#fff; font-weight:700; margin-left:6px;">🎉 Holidays (Red)</span> repeat for fixed dates (1 Jan, 1 May, 1 Jun, 17 Aug, 25–26 Dec).
+    </div>
+    <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:16px;">
+      <div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+          <button class="btn btn-sm" onclick="shiftHolidayCalMonth(-1)">◀ Prev</button>
+          <div style="display:flex; gap:6px;">
+            <select id="holCalMonth" onchange="renderHolidayCalendarModal()"></select>
+            <select id="holCalYear" onchange="renderHolidayCalendarModal()"></select>
+          </div>
+          <button class="btn btn-sm" onclick="shiftHolidayCalMonth(1)">Next ▶</button>
+        </div>
+        <div class="hol-cal-grid" id="holCalendarGrid"></div>
+
+        <div style="margin-top:12px; background:var(--surface-alt); border:1px solid var(--border); border-radius:6px; padding:10px;">
+          <div style="font-weight:700; font-size:12px; margin-bottom:6px;">Selected Date: <span id="holSelectedDateLabel" style="color:var(--primary);">Click any date above</span></div>
+          <input type="hidden" id="holSelectedDateInput">
+          <div style="display:flex; gap:6px; margin-bottom:8px;">
+            <input type="text" id="holNameInput" placeholder="Write holiday name..." style="flex:1;">
+            <button class="btn btn-primary" onclick="saveHolidayFromModal()">Save Holiday</button>
+            <button class="btn btn-danger" id="holDeleteBtn" style="display:none;" onclick="deleteSelectedHoliday()">Delete Holiday</button>
+          </div>
+          <div style="display:flex; gap:6px; border-top:1px solid var(--border-light); padding-top:8px;">
+            <input type="text" id="bdayNameInput" placeholder="Add recurring birthday (Complete Name) on this date..." style="flex:1;">
+            <button class="btn" style="background:#facc15; color:#0f172a; border-color:#eab308; font-weight:800;" onclick="addBirthdayOnSelectedDate()">+ Add Birthday</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-weight:700; font-size:12px; margin-bottom:6px;">Birthdays &amp; Holidays in <span id="holListYearLabel">2026</span></div>
+        <div class="table-scroll" style="max-height:380px; overflow-y:auto; border:1px solid var(--border); border-radius:4px;">
+          <table class="data-table" id="holidaysListTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeHolidaysModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 5: HIDE / SHOW YEARS & ADD +1 YEAR WINDOW -->
+<div class="modal-backdrop" id="yearsVisModal">
+  <div class="modal">
+    <h3>⚙ Display / Hide Years &amp; Add Year</h3>
+    <div style="display:flex; align-items:center; justify-content:space-between; background:var(--surface-alt); padding:10px 12px; border:1px solid var(--border); border-radius:6px; margin-bottom:12px;">
+      <div>
+        <div style="font-weight:700; font-size:12.5px;">Extend Timeline</div>
+        <div style="font-size:11px; color:var(--text-muted);">Adds the next year with repetitive holidays &amp; birthdays</div>
+      </div>
+      <button class="btn btn-primary" onclick="addNewYear()">+1 Year</button>
+    </div>
+
+    <div style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
+      <button class="btn btn-sm" onclick="setYearsVisibilityRange(2015, 2024, true)">Hide 2015–2024</button>
+      <button class="btn btn-sm" onclick="setYearsVisibilityRange(2015, 2024, false)">Show 2015–2024</button>
+      <button class="btn btn-sm" onclick="setYearsVisibilityRange(2015, 2026, true)">Hide 2015–2026</button>
+      <button class="btn btn-sm btn-primary" onclick="setYearsVisibilityRange(1900, 2100, false)">Show All Years</button>
+    </div>
+    <div id="yearsVisGrid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:6px;"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeYearsVisModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toastMsg">Saved</div>
+
+<script>
+/*__ROSTER_DATA_START__*/
+const FACTORY_DATA = {"employees": [{"id": 1, "code": "WinnerS", "name": "Winner Saragih", "fullName": "Winner Saragih", "section": "LTP", "checkboxGroup": "LTP", "commencementDate": "2015-07-22", "startYear": 2015, "startMonth": 7, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 2, "code": "HoseaD", "name": "Hosea Dongalemba", "fullName": "Hosea Dongalemba", "section": "LTP", "checkboxGroup": "STP", "commencementDate": "2019-09-25", "startYear": 2019, "startMonth": 9, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 3, "code": "MIrvanFS", "name": "Muhammad Irvan F Satria", "fullName": "Muhammad Irvan F Satria", "section": "LTP", "checkboxGroup": "LTP", "commencementDate": "2024-12-15", "startYear": 2024, "startMonth": 12, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 4, "code": "MichaelJ", "name": "Michael Jerrycho Purba", "fullName": "Michael Jerrycho Purba", "section": "LTP", "checkboxGroup": "LTP", "commencementDate": "2025-06-21", "startYear": 2025, "startMonth": 6, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 5, "code": "AntoniR", "name": "Muhamad Antoni Rizki", "fullName": "Muhamad Antoni Rizki", "section": "LTP", "checkboxGroup": "LTP", "commencementDate": "2025-07-01", "startYear": 2025, "startMonth": 7, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 6, "code": "MFarhanP", "name": "Muhamad Farhan Prawiratama", "fullName": "Muhamad Farhan Prawiratama", "section": "STP", "checkboxGroup": "STP", "commencementDate": "2024-06-18", "startYear": 2024, "startMonth": 6, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 7, "code": "AdjarL", "name": "Adjar Landung Pambudi", "fullName": "Adjar Landung Pambudi", "section": "STP", "checkboxGroup": "STP", "commencementDate": "2024-12-17", "startYear": 2024, "startMonth": 12, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 8, "code": "MarioY", "name": "Mario Yuven", "fullName": "Mario Yuven", "section": "STP", "checkboxGroup": "STP", "commencementDate": "2025-02-04", "startYear": 2025, "startMonth": 2, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 9, "code": "AndiT", "name": "Andi Tawaqqal", "fullName": "Andi Tawaqqal", "section": "STP", "checkboxGroup": "STP", "commencementDate": "2025-02-16", "startYear": 2025, "startMonth": 2, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 10, "code": "AnanditoN", "name": "Anandito Stefan Imanuel Nugroho", "fullName": "Anandito Stefan Imanuel Nugroho", "section": "STP", "checkboxGroup": "STP", "commencementDate": "2025-04-08", "startYear": 2025, "startMonth": 4, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}, {"id": 11, "code": "EsterC", "name": "Ester Christiani Sitompul", "fullName": "Ester Christiani Sitompul", "section": "STP", "checkboxGroup": "STP", "commencementDate": "2025-01-06", "startYear": 2025, "startMonth": 1, "daysWorking": 28, "daysRest": 14, "openingBalance": 0.0, "openingAL": 0, "visible": true, "resignedHidden": false}], "transitions": {"1": {"2025-01-02": "O-01", "2025-01-22": "W-01", "2025-02-12": "O-01", "2025-02-26": "W-01", "2025-03-30": "O-01", "2025-04-18": "W-01", "2025-06-06": "O-01", "2025-06-30": "W-01", "2025-08-16": "O-01", "2025-09-08": "W-01", "2025-10-22": "A-01", "2025-10-27": "O-01", "2025-11-11": "W-01", "2025-12-13": "A-01", "2025-12-14": "A-02", "2025-12-15": "A-03", "2025-12-16": "A-04", "2025-12-17": "A-05", "2025-12-18": "A-06", "2025-12-19": "A-07", "2025-12-20": "O-01", "2025-12-21": "O-02", "2025-12-22": "O-03", "2025-12-23": "O-04", "2025-12-24": "O-05", "2025-12-25": "O-06", "2025-12-26": "O-07", "2025-12-27": "O-08", "2025-12-28": "O-09", "2025-12-29": "O-10", "2025-12-30": "O-11", "2025-12-31": "O-12", "2026-01-19": "W-01", "2026-02-13": "O-01", "2026-02-27": "W-01", "2026-03-14": "O-01", "2026-04-03": "A-01", "2026-04-08": "W-01", "2026-05-07": "O-01", "2026-05-17": "W-01", "2026-05-25": "O-01", "2026-06-08": "W-01", "2026-07-11": "O-01", "2026-07-30": "W-01", "2026-09-04": "O-01", "2026-09-20": "W-01", "2026-10-27": "O-01", "2026-11-10": "W-01", "2026-12-12": "O-01", "2026-12-13": "O-02", "2026-12-14": "O-03", "2026-12-15": "O-04", "2026-12-16": "O-05", "2026-12-17": "O-06", "2026-12-18": "O-07", "2026-12-19": "O-08", "2026-12-20": "O-09", "2026-12-21": "O-10", "2026-12-22": "O-11", "2026-12-23": "O-12", "2026-12-24": "O-13", "2026-12-25": "O-14", "2026-12-26": "O-15", "2026-12-27": "O-16", "2026-12-28": "O-17", "2026-12-29": "O-18", "2026-12-30": "O-19", "2026-12-31": "O-20", "2027-01-07": "W-01", "2027-02-13": "O-01", "2027-02-19": "W-01", "2027-03-05": "O-01", "2027-04-01": "W-01", "2015-07-22": "W-01", "2015-08-26": "O-01", "2015-09-14": "W-01", "2015-10-16": "O-01", "2015-10-23": "W-01", "2015-10-27": "O-01", "2015-11-03": "W-01", "2015-11-18": "O-01", "2015-11-26": "W-01", "2015-12-23": "O-01", "2016-01-06": "W-01", "2016-02-20": "O-01", "2016-03-22": "W-01", "2016-04-25": "O-01", "2016-05-09": "W-01", "2016-06-13": "O-01", "2016-06-27": "W-01", "2016-07-22": "O-01", "2016-08-03": "W-01", "2016-08-31": "O-01", "2016-09-14": "W-01", "2016-10-07": "O-01", "2016-10-17": "W-01", "2016-11-14": "O-01", "2016-11-28": "W-01", "2016-12-23": "O-01", "2017-01-06": "W-01", "2017-02-03": "O-01", "2017-02-17": "W-01", "2017-03-24": "O-01", "2017-04-07": "W-01", "2017-04-21": "O-01", "2017-05-01": "W-01", "2017-05-31": "O-01", "2017-06-14": "W-01", "2017-07-07": "O-01", "2017-07-21": "W-01", "2017-08-28": "O-01", "2017-09-11": "W-01", "2017-10-14": "O-01", "2017-10-28": "W-01", "2017-11-24": "O-01", "2017-12-04": "W-01", "2017-12-23": "O-01", "2018-01-06": "W-01", "2018-02-09": "O-01", "2018-02-22": "W-01", "2018-03-29": "O-01", "2018-04-12": "W-01", "2018-05-16": "O-01", "2018-06-07": "W-01", "2018-07-06": "O-01", "2018-07-20": "W-01", "2018-08-15": "O-01", "2018-08-29": "W-01", "2018-10-01": "O-01", "2018-10-15": "W-01", "2018-11-15": "O-01", "2018-11-29": "W-01", "2018-12-28": "O-01", "2019-01-10": "W-01", "2019-02-11": "O-01", "2019-02-25": "W-01", "2019-03-29": "O-01", "2019-04-13": "W-01", "2019-05-17": "O-01", "2019-05-31": "W-01", "2019-06-24": "O-01", "2019-07-08": "W-01", "2019-08-12": "O-01", "2019-08-26": "W-01", "2019-09-30": "O-01", "2019-10-18": "W-01", "2019-11-17": "O-01", "2019-12-01": "W-01", "2019-12-22": "O-01", "2020-01-12": "W-01", "2020-02-14": "O-01", "2020-02-28": "W-01", "2020-03-29": "O-01", "2020-04-05": "W-01", "2020-04-23": "O-01", "2020-05-23": "W-01", "2020-06-01": "O-01", "2020-06-09": "W-01", "2020-10-17": "O-01", "2020-11-09": "W-01", "2020-12-18": "O-01", "2020-12-31": "W-01", "2021-01-14": "O-01", "2021-01-18": "W-01", "2021-02-13": "O-01", "2021-03-04": "W-01", "2021-04-06": "O-01", "2021-04-20": "W-01", "2021-05-28": "O-01", "2021-06-07": "W-01", "2021-08-01": "O-01", "2021-08-04": "W-01", "2021-10-03": "O-01", "2021-10-19": "W-01", "2021-12-01": "O-01", "2021-12-18": "W-01", "2022-02-02": "O-01", "2022-02-18": "W-01", "2022-04-04": "O-01", "2022-04-20": "W-01", "2022-05-17": "O-01", "2022-06-06": "W-01", "2022-07-07": "O-01", "2022-07-25": "W-01", "2022-08-21": "O-01", "2022-09-06": "W-01", "2022-10-06": "O-01", "2022-10-19": "W-01", "2022-11-17": "O-01", "2022-11-18": "W-01", "2022-11-20": "O-01", "2022-12-01": "W-01", "2022-12-25": "O-01", "2023-01-10": "W-01", "2023-02-10": "O-01", "2023-02-27": "W-01", "2023-03-20": "O-01", "2023-04-02": "W-01", "2023-04-24": "O-01", "2023-05-15": "W-01", "2023-06-20": "O-01", "2023-07-15": "W-01", "2023-08-14": "O-01", "2023-09-08": "W-01", "2023-10-04": "O-01", "2023-10-25": "W-01", "2023-12-03": "O-01", "2023-12-27": "W-01", "2024-02-06": "O-01", "2024-03-01": "W-01", "2024-04-07": "O-01", "2024-04-28": "W-01", "2024-05-23": "O-01", "2024-06-07": "W-01", "2024-07-10": "O-01", "2024-07-27": "W-01", "2024-08-22": "O-01", "2024-09-07": "W-01", "2024-11-04": "O-01", "2024-11-19": "W-01"}, "2": {"2025-01-04": "W-01", "2025-01-28": "O-01", "2025-02-03": "W-01", "2025-02-06": "O-01", "2025-02-09": "W-01", "2025-03-09": "O-01", "2025-03-23": "W-01", "2025-04-20": "O-01", "2025-05-03": "W-01", "2025-05-05": "O-01", "2025-05-06": "W-01", "2025-06-03": "O-01", "2025-06-20": "W-01", "2025-07-16": "O-01", "2025-08-03": "W-01", "2025-09-02": "O-01", "2025-09-17": "W-01", "2025-10-17": "O-01", "2025-11-01": "A-01", "2025-11-04": "W-01", "2025-12-06": "O-01", "2025-12-18": "W-01", "2025-12-19": "O-01", "2025-12-20": "W-01", "2025-12-21": "O-01", "2025-12-22": "W-01", "2025-12-25": "A-01", "2025-12-28": "W-01", "2025-12-31": "A-01", "2026-01-03": "W-01", "2026-01-29": "O-01", "2026-02-26": "W-01", "2026-04-01": "O-01", "2026-04-15": "W-01", "2026-05-13": "O-01", "2026-05-27": "W-01", "2026-06-27": "O-01", "2026-07-12": "W-01", "2026-08-10": "O-01", "2026-08-11": "O-02", "2026-08-12": "O-03", "2026-08-13": "O-04", "2026-08-14": "O-05", "2026-08-15": "O-06", "2026-08-16": "O-07", "2026-08-17": "O-08", "2026-08-18": "W-01", "2026-08-19": "W-02", "2026-08-20": "W-03", "2026-08-21": "W-04", "2026-08-22": "O-01", "2026-08-23": "O-02", "2026-08-24": "O-03", "2026-08-25": "O-04", "2026-08-26": "O-05", "2026-08-27": "O-06", "2026-08-28": "O-07", "2026-08-29": "O-08", "2026-08-30": "W-01", "2026-09-25": "O-01", "2026-09-26": "O-02", "2026-09-27": "O-03", "2026-09-28": "O-04", "2026-09-29": "O-05", "2026-09-30": "O-06", "2026-10-08": "W-01", "2026-11-11": "O-01", "2026-11-12": "O-02", "2026-11-13": "O-03", "2026-11-14": "O-04", "2026-11-15": "O-05", "2026-11-16": "O-06", "2026-11-17": "O-07", "2026-11-18": "O-08", "2026-11-19": "O-09", "2026-11-20": "O-10", "2026-11-21": "O-11", "2026-11-22": "O-12", "2026-11-23": "O-13", "2026-11-24": "O-14", "2026-11-25": "O-15", "2026-11-26": "O-16", "2026-11-27": "O-17", "2026-11-28": "O-18", "2026-11-29": "W-01", "2026-11-30": "W-02", "2026-12-25": "O-01", "2026-12-26": "O-02", "2026-12-27": "O-03", "2026-12-28": "O-04", "2026-12-29": "O-05", "2026-12-30": "O-06", "2026-12-31": "O-07", "2027-01-07": "W-01", "2027-02-04": "O-01", "2027-02-18": "W-01", "2027-03-18": "O-01", "2027-04-01": "W-01", "2027-04-29": "O-01", "2027-05-13": "W-01", "2027-06-10": "O-01", "2027-06-24": "W-01", "2027-07-22": "O-01", "2027-08-05": "W-01", "2027-09-02": "O-01", "2027-09-30": "W-01", "2027-10-28": "O-01", "2027-11-11": "W-01", "2027-12-09": "O-01", "2019-09-25": "W-01", "2019-11-02": "O-01", "2019-11-19": "W-01", "2019-12-13": "O-01", "2019-12-26": "W-01", "2020-01-24": "O-01", "2020-02-07": "W-01", "2020-03-01": "O-01", "2020-03-13": "W-01", "2020-04-18": "O-01", "2020-05-04": "W-01", "2020-06-04": "O-01", "2020-06-19": "W-01", "2020-08-10": "O-01", "2020-08-15": "W-01", "2020-08-26": "O-01", "2020-09-13": "W-01", "2020-10-13": "O-01", "2020-10-19": "W-01", "2020-11-20": "O-01", "2020-12-04": "W-01", "2020-12-05": "O-01", "2020-12-07": "W-01", "2020-12-09": "O-01", "2020-12-10": "W-01", "2021-01-10": "O-01", "2021-01-26": "W-01", "2021-03-07": "O-01", "2021-03-24": "W-01", "2021-04-24": "O-01", "2021-05-04": "W-01", "2021-05-10": "O-01", "2021-05-16": "W-01", "2021-06-07": "O-01", "2021-06-21": "W-01", "2021-07-06": "O-01", "2021-07-11": "W-01", "2021-07-31": "O-01", "2021-08-10": "W-01", "2021-09-29": "O-01", "2021-10-21": "W-01", "2021-11-25": "O-01", "2021-12-03": "W-01", "2021-12-31": "O-01", "2022-01-16": "W-01", "2022-02-11": "O-01", "2022-02-25": "W-01", "2022-03-25": "O-01", "2022-04-08": "W-01", "2022-05-09": "O-01", "2022-05-23": "W-01", "2022-06-17": "O-01", "2022-06-30": "W-01", "2022-07-30": "O-01", "2022-08-13": "W-01", "2022-09-07": "O-01", "2022-09-26": "W-01", "2022-10-31": "O-01", "2022-11-15": "W-01", "2022-11-29": "O-01", "2022-12-11": "W-01", "2022-12-29": "O-01", "2023-01-08": "W-01", "2023-02-10": "O-01", "2023-02-27": "W-01", "2023-03-27": "O-01", "2023-04-10": "W-01", "2023-05-10": "O-01", "2023-05-20": "W-01", "2023-06-17": "O-01", "2023-06-23": "W-01", "2023-06-26": "O-01", "2023-06-27": "W-01", "2023-07-03": "O-01", "2023-07-04": "W-01", "2023-07-13": "O-01", "2023-07-22": "W-01", "2023-07-25": "O-01", "2023-08-09": "W-01", "2023-09-04": "O-01", "2023-09-26": "W-01", "2023-10-27": "O-01", "2023-11-02": "W-01", "2023-11-28": "O-01", "2023-12-14": "W-01", "2024-01-08": "O-01", "2024-01-25": "W-01", "2024-02-22": "O-01", "2024-03-08": "W-01", "2024-04-05": "O-01", "2024-04-18": "W-01", "2024-05-19": "O-01", "2024-06-11": "W-01", "2024-07-05": "O-01", "2024-07-17": "W-01", "2024-08-07": "O-01", "2024-08-15": "W-01", "2024-09-26": "O-01", "2024-10-08": "W-01", "2024-11-01": "O-01", "2024-11-13": "W-01", "2024-12-17": "O-01"}, "3": {"2025-01-12": "O-01", "2025-01-26": "W-01", "2025-02-23": "O-01", "2025-03-04": "W-01", "2025-03-25": "O-01", "2025-04-05": "W-01", "2025-05-12": "O-01", "2025-05-25": "W-01", "2025-06-21": "O-01", "2025-07-04": "W-01", "2025-08-08": "O-01", "2025-08-25": "W-01", "2025-09-22": "O-01", "2025-10-05": "W-01", "2025-11-10": "O-01", "2025-12-01": "W-01", "2026-01-07": "O-01", "2026-01-25": "W-01", "2026-01-26": "W-02", "2026-03-01": "A-01", "2026-03-08": "O-01", "2026-03-29": "W-01", "2026-04-29": "O-01", "2026-05-10": "W-01", "2026-06-09": "O-01", "2026-06-25": "W-01", "2026-08-01": "O-01", "2026-08-02": "O-02", "2026-08-03": "O-03", "2026-08-04": "O-04", "2026-08-05": "O-05", "2026-08-06": "O-06", "2026-08-07": "O-07", "2026-08-08": "O-08", "2026-08-09": "O-09", "2026-08-10": "O-10", "2026-08-11": "O-11", "2026-08-12": "O-12", "2026-08-13": "O-13", "2026-08-14": "O-14", "2026-08-15": "O-15", "2026-08-16": "O-16", "2026-08-17": "W-01", "2026-09-12": "O-01", "2026-09-26": "W-01", "2026-10-26": "O-01", "2026-11-09": "W-01", "2026-12-03": "O-01", "2026-12-22": "W-01", "2024-12-15": "W-01"}, "4": {"2025-06-21": "W-01", "2025-07-15": "O-01", "2025-07-25": "W-01", "2025-08-24": "O-01", "2025-09-07": "W-01", "2025-10-04": "O-01", "2025-10-17": "W-01", "2025-11-14": "O-01", "2025-12-04": "W-01", "2026-01-05": "O-01", "2026-01-20": "W-01", "2026-02-17": "O-01", "2026-03-05": "W-01", "2026-04-02": "O-01", "2026-04-16": "W-01", "2026-05-18": "O-01", "2026-06-02": "W-01", "2026-07-14": "W-01", "2026-08-16": "O-01", "2026-08-17": "O-02", "2026-08-18": "O-03", "2026-09-01": "W-01", "2026-09-29": "O-01", "2026-10-13": "W-01", "2026-10-14": "W-02", "2026-10-15": "W-03", "2026-10-16": "W-04", "2026-11-10": "O-01", "2026-11-11": "O-02", "2026-11-12": "O-03", "2026-11-13": "O-04", "2026-11-14": "O-05", "2026-11-15": "O-06", "2026-11-16": "O-07", "2026-11-17": "O-08", "2026-11-18": "O-09", "2026-11-19": "O-10", "2026-11-20": "O-11", "2026-11-21": "O-12", "2026-11-22": "O-13", "2026-11-23": "O-14", "2026-11-24": "W-01", "2026-11-25": "W-02", "2026-11-26": "W-03", "2026-11-27": "W-04", "2026-11-28": "W-05", "2026-11-29": "W-06", "2026-11-30": "W-07", "2026-12-22": "O-01", "2026-12-23": "O-02", "2026-12-24": "O-03", "2026-12-25": "O-04", "2026-12-26": "O-05", "2026-12-27": "O-06", "2026-12-28": "O-07", "2026-12-29": "O-08", "2026-12-30": "O-09", "2026-12-31": "O-10"}, "5": {"2025-07-01": "W-01", "2025-08-02": "O-01", "2025-08-18": "W-01", "2025-09-15": "O-01", "2025-09-29": "W-01", "2025-10-21": "O-01", "2025-10-31": "W-01", "2025-12-12": "O-01", "2026-01-02": "W-01", "2026-01-03": "W-02", "2026-01-30": "O-01", "2026-02-13": "W-01", "2026-03-14": "O-01", "2026-03-27": "W-01", "2026-04-27": "O-01", "2026-05-15": "W-01", "2026-06-12": "O-01", "2026-06-26": "W-01", "2026-07-20": "O-01", "2026-08-01": "W-01", "2026-08-30": "O-01", "2026-08-31": "O-02", "2026-09-13": "W-01", "2026-09-14": "W-02", "2026-09-15": "W-03", "2026-09-16": "W-04", "2026-09-17": "W-05", "2026-09-18": "W-06", "2026-09-19": "W-07", "2026-09-20": "W-08", "2026-09-21": "W-09", "2026-09-22": "W-10", "2026-09-23": "W-11", "2026-09-24": "W-12", "2026-09-25": "W-13", "2026-09-26": "W-14", "2026-09-27": "W-15", "2026-09-28": "W-16", "2026-09-29": "W-17", "2026-09-30": "W-18", "2026-10-05": "O-01", "2026-10-06": "O-02", "2026-10-07": "O-03", "2026-10-08": "O-04", "2026-10-09": "O-05", "2026-10-10": "O-06", "2026-10-11": "O-07", "2026-10-12": "O-08", "2026-10-13": "O-09", "2026-10-14": "O-10", "2026-10-15": "O-11", "2026-10-16": "O-12", "2026-10-17": "O-13", "2026-10-18": "O-14", "2026-10-19": "W-01", "2026-11-24": "O-01", "2026-12-07": "W-01"}, "6": {"2025-01-10": "O-01", "2025-01-20": "W-01", "2025-02-17": "O-01", "2025-03-03": "W-01", "2025-03-30": "O-01", "2025-04-15": "W-01", "2025-05-11": "O-01", "2025-05-20": "W-01", "2025-06-19": "O-01", "2025-07-05": "W-01", "2025-08-04": "O-01", "2025-08-19": "W-01", "2025-09-20": "O-01", "2025-10-06": "W-01", "2025-11-08": "O-01", "2025-11-09": "O-02", "2025-11-10": "O-03", "2025-11-11": "O-04", "2025-11-12": "O-05", "2025-11-13": "O-06", "2025-11-14": "O-07", "2025-11-15": "O-08", "2025-11-16": "O-09", "2025-11-17": "O-10", "2025-11-18": "O-11", "2025-11-19": "O-12", "2025-11-20": "O-13", "2025-11-21": "W-01", "2025-12-11": "O-01", "2025-12-21": "W-01", "2026-01-17": "O-01", "2026-02-04": "W-01", "2026-03-04": "A-01", "2026-03-08": "O-01", "2026-03-26": "W-01", "2026-04-23": "A-01", "2026-04-24": "A-02", "2026-04-25": "A-03", "2026-04-26": "O-01", "2026-05-09": "W-01", "2026-06-03": "A-01", "2026-06-08": "O-01", "2026-06-22": "W-01", "2026-07-17": "A-01", "2026-07-22": "O-01", "2026-08-01": "W-01", "2026-08-02": "W-02", "2026-08-03": "W-03", "2026-08-04": "W-04", "2026-08-05": "W-05", "2026-08-06": "W-06", "2026-08-23": "O-01", "2026-09-02": "W-01", "2026-09-30": "O-01", "2026-10-14": "W-01", "2026-11-03": "O-01", "2026-11-13": "W-01", "2026-12-11": "O-01", "2026-12-25": "W-01", "2027-01-25": "O-01", "2027-02-08": "W-01", "2027-03-08": "O-01", "2027-03-24": "W-01", "2027-04-23": "O-01", "2027-05-03": "W-01", "2027-05-31": "O-01", "2027-06-14": "W-01", "2027-07-12": "O-01", "2027-07-26": "W-01", "2027-08-20": "O-01", "2027-09-03": "W-01", "2027-10-01": "O-01", "2027-10-15": "W-01", "2027-11-12": "O-01", "2027-11-26": "W-01", "2027-12-24": "O-01", "2024-06-18": "W-01", "2024-07-24": "O-01", "2024-08-07": "W-01", "2024-09-04": "O-01", "2024-09-17": "W-01", "2024-10-19": "O-01", "2024-11-05": "W-01", "2024-12-06": "O-01", "2024-12-20": "W-01"}, "7": {"2025-01-21": "O-01", "2025-01-31": "W-01", "2025-02-09": "O-01", "2025-02-13": "W-01", "2025-03-14": "O-01", "2025-03-28": "W-01", "2025-04-25": "O-01", "2025-05-09": "W-01", "2025-06-08": "O-01", "2025-06-23": "W-01", "2025-07-23": "O-01", "2025-08-07": "W-01", "2025-09-04": "O-01", "2025-09-16": "W-01", "2025-10-15": "O-01", "2025-10-29": "W-01", "2025-11-21": "O-01", "2025-11-22": "O-02", "2025-11-23": "O-03", "2025-12-03": "W-01", "2025-12-30": "O-01", "2025-12-31": "O-02", "2026-01-12": "W-01", "2026-02-10": "O-01", "2026-02-11": "O-02", "2026-02-12": "O-03", "2026-02-13": "O-04", "2026-02-14": "O-05", "2026-02-15": "O-06", "2026-02-16": "O-07", "2026-02-17": "O-08", "2026-02-18": "O-09", "2026-02-19": "O-10", "2026-02-20": "O-11", "2026-02-21": "O-12", "2026-02-22": "O-13", "2026-02-23": "O-14", "2026-02-24": "W-01", "2026-03-19": "A-01", "2026-03-24": "O-01", "2026-04-01": "X-01", "2026-04-04": "A-01", "2026-04-13": "ORR-01", "2026-04-14": "ORR-02", "2026-04-15": "ORR-03", "2026-04-16": "ORR-04", "2026-04-17": "ORR-05", "2026-04-18": "ORR-06", "2026-04-19": "ORR-07", "2026-04-20": "ORR-08", "2026-04-21": "ORR-09", "2026-04-22": "ORR-10", "2026-04-23": "ORR-11", "2026-04-24": "ORR-12", "2026-04-25": "ORR-13", "2026-04-27": "ORR-15", "2026-04-28": "ORR-16", "2026-04-29": "O-01", "2026-04-30": "O-02", "2026-05-11": "W-01", "2026-05-12": "W-02", "2026-05-13": "W-03", "2026-06-21": "O-01", "2026-06-22": "O-02", "2026-06-23": "O-03", "2026-06-24": "O-04", "2026-06-25": "O-05", "2026-06-26": "O-06", "2026-06-27": "O-07", "2026-06-28": "O-08", "2026-06-29": "O-09", "2026-06-30": "O-10", "2026-07-06": "W-01", "2026-07-07": "W-02", "2026-08-02": "W-28", "2026-08-03": "O-01", "2026-08-04": "O-02", "2026-08-05": "O-03", "2026-08-06": "O-04", "2026-08-07": "O-05", "2026-08-08": "O-06", "2026-08-09": "O-07", "2026-08-10": "O-08", "2026-08-11": "O-09", "2026-08-12": "O-10", "2026-08-13": "O-11", "2026-08-14": "O-12", "2026-08-15": "O-13", "2026-08-16": "O-14", "2026-08-17": "O-15", "2026-08-18": "O-16", "2026-08-19": "W-01", "2026-09-17": "O-01", "2026-10-01": "W-01", "2026-10-25": "O-01", "2026-10-26": "O-02", "2026-11-05": "W-01", "2026-11-26": "O-01", "2026-12-10": "W-01", "2027-01-10": "O-01", "2027-01-25": "W-01", "2027-02-24": "O-01", "2027-03-15": "W-01", "2027-04-12": "O-01", "2027-05-17": "O-01", "2027-05-31": "W-01", "2027-06-28": "O-01", "2027-07-12": "W-01", "2027-08-09": "O-01", "2027-08-23": "W-01", "2024-12-17": "W-01"}, "8": {"2025-02-04": "W-01", "2025-03-04": "O-01", "2025-03-18": "W-01", "2025-04-15": "O-01", "2025-04-29": "W-01", "2025-05-29": "O-01", "2025-06-13": "W-01", "2025-07-13": "O-01", "2025-07-26": "W-01", "2025-08-21": "O-01", "2025-09-03": "W-01", "2025-10-01": "O-01", "2025-10-14": "W-01", "2025-11-12": "O-01", "2025-11-20": "W-01", "2025-12-16": "O-01", "2025-12-17": "O-02", "2025-12-18": "O-03", "2025-12-19": "O-04", "2025-12-20": "O-05", "2025-12-21": "O-06", "2026-01-04": "W-01", "2026-02-06": "O-01", "2026-02-07": "O-02", "2026-02-08": "O-03", "2026-02-09": "O-04", "2026-02-20": "W-01", "2026-03-08": "A-01", "2026-03-11": "O-01", "2026-03-19": "W-01", "2026-04-20": "A-01", "2026-04-21": "A-02", "2026-04-22": "A-03", "2026-04-23": "O-01", "2026-04-24": "O-02", "2026-04-25": "O-03", "2026-04-26": "W-01", "2026-05-08": "O-01", "2026-05-20": "W-01", "2026-05-21": "W-02", "2026-05-22": "W-03", "2026-05-23": "W-04", "2026-06-08": "O-01", "2026-06-20": "W-01", "2026-07-12": "A-01", "2026-07-13": "A-02", "2026-07-14": "A-03", "2026-07-15": "A-04", "2026-07-16": "A-05", "2026-07-17": "A-06", "2026-07-18": "O-01", "2026-08-08": "W-01", "2026-09-04": "O-01", "2026-09-17": "W-01", "2026-10-14": "O-01", "2026-10-27": "W-01", "2026-12-16": "O-01", "2027-01-07": "W-01", "2027-02-10": "O-01", "2027-02-24": "W-01", "2027-03-24": "O-01", "2027-04-07": "W-01", "2027-05-05": "O-01", "2027-05-19": "W-01"}, "9": {"2025-02-16": "W-01", "2025-03-18": "O-01", "2025-04-02": "W-01", "2025-05-12": "O-01", "2025-05-26": "W-01", "2025-06-25": "O-01", "2025-07-11": "W-01", "2025-08-06": "O-01", "2025-08-20": "W-01", "2025-09-17": "O-01", "2025-09-30": "W-01", "2025-10-29": "O-01", "2025-11-11": "W-01", "2025-12-04": "O-01", "2025-12-17": "W-01", "2025-12-18": "W-02", "2026-01-07": "O-01", "2026-01-21": "W-01", "2026-01-22": "W-02", "2026-01-23": "W-03", "2026-01-24": "W-04", "2026-01-25": "W-05", "2026-01-26": "W-06", "2026-01-27": "W-07", "2026-01-28": "W-08", "2026-01-29": "W-09", "2026-01-30": "W-10", "2026-01-31": "W-11", "2026-02-23": "O-01", "2026-02-24": "O-02", "2026-03-09": "W-01", "2026-04-03": "W-26", "2026-04-04": "O-01", "2026-04-05": "O-02", "2026-04-06": "O-03", "2026-04-07": "O-04", "2026-04-08": "O-05", "2026-04-09": "O-06", "2026-04-10": "O-07", "2026-04-11": "O-08", "2026-04-12": "O-09", "2026-04-13": "O-10", "2026-04-14": "O-11", "2026-04-15": "O-12", "2026-04-16": "O-13", "2026-04-17": "O-14", "2026-04-18": "W-01", "2026-05-17": "O-01", "2026-05-18": "O-02", "2026-05-19": "O-03", "2026-05-31": "A-01", "2026-06-03": "W-04", "2026-06-04": "W-05", "2026-06-05": "W-06", "2026-06-06": "W-07", "2026-06-07": "W-08", "2026-06-08": "W-09", "2026-06-09": "W-10", "2026-06-10": "W-11", "2026-06-11": "W-12", "2026-06-12": "W-13", "2026-06-13": "W-14", "2026-06-14": "W-15", "2026-06-15": "W-16", "2026-06-16": "W-17", "2026-06-17": "W-18", "2026-06-18": "W-19", "2026-06-19": "W-20", "2026-06-20": "W-21", "2026-06-21": "W-22", "2026-06-22": "W-23", "2026-06-23": "W-24", "2026-06-24": "W-25", "2026-06-25": "W-26", "2026-06-26": "W-27", "2026-06-27": "W-28", "2026-06-28": "W-29", "2026-06-29": "W-30", "2026-06-30": "W-31", "2026-07-04": "O-01", "2026-07-16": "A-01", "2026-07-17": "W-02", "2026-08-03": "X-01", "2026-08-04": "X-01", "2026-08-05": "X-01", "2026-08-06": "O-01", "2026-08-07": "O-02", "2026-08-08": "O-03", "2026-08-09": "O-04", "2026-08-10": "O-05", "2026-08-11": "O-06", "2026-08-12": "O-07", "2026-08-13": "O-08", "2026-08-14": "O-09", "2026-08-15": "O-10", "2026-08-16": "O-11", "2026-08-17": "W-01", "2026-08-18": "W-02", "2026-08-19": "W-03", "2026-08-20": "W-04", "2026-08-21": "W-05", "2026-08-22": "W-06", "2026-08-23": "W-07", "2026-08-24": "W-08", "2026-08-25": "W-09", "2026-08-26": "W-10", "2026-08-27": "W-11", "2026-08-28": "W-12", "2026-08-29": "W-13", "2026-08-30": "W-14", "2026-08-31": "W-15", "2026-09-08": "O-01", "2026-09-09": "O-02", "2026-09-10": "O-03", "2026-09-11": "O-03", "2026-09-12": "O-04", "2026-09-13": "O-05", "2026-09-14": "O-06", "2026-09-15": "O-07", "2026-09-16": "O-08", "2026-09-17": "O-09", "2026-09-18": "O-10", "2026-09-19": "O-11", "2026-09-20": "W-01", "2026-10-10": "O-01", "2026-10-11": "O-02", "2026-10-12": "O-03", "2026-10-13": "O-04", "2026-10-14": "O-05", "2026-10-15": "O-06", "2026-10-16": "O-07", "2026-10-17": "O-08", "2026-10-18": "O-09", "2026-10-19": "O-10", "2026-10-20": "W-01", "2026-11-09": "O-01", "2026-11-10": "O-02", "2026-11-11": "O-03", "2026-11-12": "O-04", "2026-11-13": "O-05", "2026-11-14": "O-06", "2026-11-15": "O-07", "2026-11-16": "O-08", "2026-11-17": "O-09", "2026-11-18": "O-10", "2026-11-19": "W-01", "2026-12-09": "O-01", "2026-12-10": "O-02", "2026-12-11": "O-03", "2026-12-12": "O-04", "2026-12-13": "O-05", "2026-12-14": "O-06", "2026-12-15": "O-07", "2026-12-16": "O-08", "2026-12-17": "O-09", "2026-12-18": "W-01"}, "10": {"2025-04-08": "W-01", "2025-04-09": "W-02", "2025-04-10": "W-03", "2025-04-11": "W-04", "2025-04-12": "W-05", "2025-04-13": "W-06", "2025-04-14": "W-07", "2025-04-15": "W-08", "2025-04-16": "W-09", "2025-04-17": "W-10", "2025-04-18": "W-11", "2025-04-19": "W-12", "2025-04-20": "W-13", "2025-04-21": "W-14", "2025-04-22": "W-15", "2025-04-23": "W-16", "2025-04-24": "W-17", "2025-04-25": "W-18", "2025-04-26": "W-19", "2025-04-27": "W-20", "2025-04-28": "W-21", "2025-04-29": "W-22", "2025-04-30": "W-23", "2025-05-06": "O-01", "2025-05-20": "W-01", "2025-06-17": "O-01", "2025-07-05": "W-01", "2025-08-06": "O-01", "2025-08-18": "W-01", "2025-09-16": "O-01", "2025-09-29": "W-01", "2025-11-04": "O-01", "2025-11-18": "W-01", "2025-12-28": "O-01", "2025-12-29": "O-02", "2025-12-30": "O-03", "2026-01-22": "W-01", "2026-03-12": "O-01", "2026-03-30": "W-01", "2026-04-12": "A-01", "2026-04-13": "W-15", "2026-05-03": "O-01", "2026-05-18": "W-01", "2026-06-20": "O-01", "2026-07-04": "A-01", "2026-07-09": "W-06", "2026-07-17": "A-14", "2026-07-18": "W-15", "2026-07-25": "A-22", "2026-07-26": "W-23", "2026-07-29": "O-01", "2026-08-05": "W-08", "2026-08-09": "O-12", "2026-08-12": "W-01", "2026-08-14": "A-03", "2026-08-15": "W-04", "2026-09-04": "A-24", "2026-09-09": "O-01", "2026-09-30": "W-01", "2026-10-20": "O-01", "2026-11-04": "W-01", "2026-11-29": "O-01", "2026-12-13": "W-01", "2027-01-15": "X-01"}, "11": {"2026-01-01": "X-01", "2026-01-12": "W-01", "2026-02-16": "O-01", "2026-03-02": "W-01", "2026-04-11": "O-01", "2026-04-22": "W-01", "2026-05-11": "O-01", "2026-05-12": "O-02", "2026-05-13": "O-03", "2026-05-14": "O-04", "2026-05-15": "O-05", "2026-05-16": "O-06", "2026-05-17": "O-07", "2026-05-18": "O-08", "2026-05-19": "O-09", "2026-05-20": "O-10", "2026-05-21": "O-11", "2026-05-22": "O-12", "2026-05-23": "O-13", "2026-05-24": "O-14", "2026-05-25": "O-15", "2026-05-26": "O-16", "2026-05-27": "O-17", "2026-05-28": "W-01", "2026-06-27": "O-01", "2026-07-12": "W-01", "2026-08-11": "O-01", "2026-08-12": "O-02", "2026-08-13": "O-03", "2026-08-14": "O-04", "2026-08-15": "O-05", "2026-08-16": "O-06", "2026-08-17": "O-07", "2026-08-18": "O-08", "2026-08-19": "O-09", "2026-08-20": "O-10", "2026-08-21": "O-11", "2026-08-22": "O-12", "2026-08-23": "O-13", "2026-08-24": "O-14", "2026-08-25": "O-15", "2026-08-26": "O-16", "2026-08-27": "W-01", "2026-09-23": "O-01", "2026-09-24": "O-02", "2026-09-25": "O-03", "2026-09-26": "O-04", "2026-09-27": "O-05", "2026-09-28": "O-06", "2026-09-29": "O-07", "2026-09-30": "O-08", "2026-10-08": "W-01", "2026-11-08": "O-01", "2026-11-22": "W-01", "2026-12-20": "O-01", "2026-12-21": "O-02", "2026-12-22": "O-03", "2026-12-23": "O-04", "2026-12-24": "O-05", "2026-12-25": "O-06", "2026-12-26": "O-07", "2026-12-27": "O-08", "2026-12-28": "O-09", "2026-12-29": "O-10", "2026-12-30": "O-11", "2026-12-31": "O-12", "2027-01-07": "W-01"}}, "comments": {"2|2026-08-18": "BST (Coaching Waster -SBY)", "9|2026-08-03": "Keluarga Meninggal Dunia", "10|2026-08-05": "Business Trip Coaching ESDM", "1|2015-10-23": "Leave for medical purpose", "1|2015-11-03": "adjusted-schedule with D&B team", "1|2016-01-06": "18-19 Feb=special leave (spouse gave birth)", "1|2016-08-03": "AL 3-5 Aug & 8-9 Aug; SL= 6-7 Aug", "1|2016-09-14": "31Aug & 16Sep = travel days, AL=14-15/9", "1|2016-10-17": "7/10 & 21/10 = travel days; 17-20/10 = AL", "1|2016-11-28": "28/11 = AL; 29/11 & 6/1 = travel days", "1|2017-01-06": "AL17-20 Feb", "1|2017-04-07": "1 - 4 May = AL, 5May=Trvl day", "1|2017-09-11": "11 Sep = AL", "1|2017-10-28": "28-30 Oct = AL , 22-23 NOV = BST", "1|2017-12-04": "4-5 Dec = AL", "1|2018-01-06": "6-7 Jan'18 = AL", "1|2018-06-07": "7-12 Jun = AL; 13-14 Jun = Special Leave", "1|2018-08-29": "29-30Sep=AL", "1|2018-11-29": "21-27 Dec = AL", "1|2019-02-25": "13-14 Apr= AL", "1|2019-04-13": "2 May = 15th day", "1|2019-05-31": "31May-1Jun= AL", "1|2020-05-23": "23-29 May = AL; 30-31 May = SL", "1|2020-06-09": "21 Jul - 3 Agustus = Airfare Claim", "1|2020-11-09": "4-16 Oct  = AL; Payment Outstanding 23 days on Sep", "1|2020-12-31": "31 Dec - 13 Jan 21 = Unfit (Isolasi)", "1|2021-03-04": "Outstanding Payment 10 days 18 Jun 21", "1|2021-06-07": "Aifare Claim 5 Jul -18 Jul 21", "1|2021-10-19": "29 SEP - 2 OCT= Annual Leave", "1|2021-12-18": "18-20 Des AL", "1|2022-02-18": "18-24 Feb AL", "1|2022-06-06": "5  - 6 June              : Baptis Anak", "1|2022-07-25": "7 - 8 June              : Outstanding cuti", "1|2022-10-19": "19 Oct = WFH, 20 Oct = ONDT", "1|2022-11-18": "15 - 16 Nov = ANL", "1|2022-12-01": "BST 18-19 Nov 22", "1|2023-01-10": "18 - 24 Dec = ANL", "1|2023-04-02": "21 - 22 Apr = ANL,  23 Apr = TRVL", "1|2023-10-25": "25-31 Oct = ANL, 1 Nov = TRVL & 17-26 Dec = OS", "1|2024-03-01": "25-27 Apr = OS,  28 Apr = TRV", "1|2024-04-28": "4-6 Jun = OS, 7-9 Jun = ANL, 10 Jun = TRV", "1|2024-06-07": "27 - 29 July = ANL, 30 July = Travel", "1|2024-07-27": "4-6 = OS, 7-10 Sept = ANL, 11 Sept = Travel", "1|2024-09-07": "28 Oct = Travel Out, 29 Oct - 3 Nov = ANL,", "1|2024-11-19": "27 Dec = Travel out, 28 Dec 2024 - 1 jan 2025 = ANL", "2|2020-12-04": "Training SAP 4,7-8 Dec", "2|2020-12-07": "Ambil Outstanding Pilkada", "2|2020-12-10": "Payment Outstanding 10 days on Jan 21", "2|2021-05-16": "21 Jun = ANL", "2|2021-12-03": "3-6 Des ANL", "2|2022-05-23": "23 - 25 May = ANL", "2|2022-12-11": "26 Dec = ANL", "2|2023-01-08": "31 Jan = ANL", "2|2023-04-10": "17 Apr = ANL", "2|2023-05-20": "8 - 9 May = ANL", "2|2023-06-23": "26 Juni = Outstanding Taken", "2|2023-06-27": "3 Juli = Outstanding Taken", "2|2023-07-22": "22 - 24 Juli = MDL (Karyawan Menikah)", "2|2023-09-26": "6-10 Oct = ANL", "2|2024-08-15": "7 Oct = OFF, tidak ada TRVL, 8 Oct Normal", "2|2024-11-13": "7-13 Dec = ANL, 14-16 Dec = ECB"}, "h15Days": {"10|2026-04-11": true, "10|2026-04-26": true, "10|2026-08-05": true, "10|2026-08-06": true, "10|2026-08-07": true, "10|2026-08-08": true}, "rrOverrides": {"1": {"cal_1_2020-06-09": {"rrAdj": -23.0}, "cal_1_2021-03-04": {"rrAdj": -10.0}, "cal_1_2024-03-01": {"tripSeq": "1"}, "cal_1_2024-04-28": {"tripSeq": "2"}, "cal_1_2024-06-07": {"tripSeq": "3"}, "cal_1_2024-07-27": {"tripSeq": "4"}, "cal_1_2024-09-07": {"tripSeq": "5"}, "cal_1_2024-11-19": {"tripSeq": "6"}, "cal_1_2025-01-22": {"tripSeq": "1"}, "cal_1_2025-02-26": {"tripSeq": "2"}, "cal_1_2025-04-18": {"tripSeq": "3"}, "cal_1_2025-06-30": {"tripSeq": "4"}, "cal_1_2025-09-08": {"tripSeq": "5"}, "cal_1_2025-11-11": {"tripSeq": "6"}, "cal_1_2026-01-19": {"tripSeq": "1"}, "cal_1_2026-02-27": {"tripSeq": "2"}, "cal_1_2026-04-03": {"tripSeq": "3"}, "cal_1_2026-05-17": {"tripSeq": "4"}, "cal_1_2026-06-08": {"tripSeq": "5"}, "cal_1_2026-07-30": {"tripSeq": "6"}, "cal_1_2026-09-21": {"tripSeq": "7"}, "cal_1_2026-11-10": {"tripSeq": "8"}, "cal_1_2027-01-07": {"tripSeq": "1"}, "cal_1_2027-02-19": {"tripSeq": "2"}, "cal_1_2027-04-01": {"tripSeq": "3"}, "cal_1_2027-05-22": {"tripSeq": "4"}, "cal_1_2027-07-14": {"tripSeq": "5"}, "cal_1_2027-09-03": {"tripSeq": "6"}, "cal_1_2027-10-15": {"tripSeq": "7"}, "cal_1_2027-11-26": {"tripSeq": "8"}}, "2": {"cal_2_2020-12-10": {"rrAdj": -10.0}}, "3": {"cal_3_2024-12-15": {"tripSeq": "1"}, "cal_3_2025-01-26": {"tripSeq": "2"}, "cal_3_2025-03-04": {"tripSeq": "3"}, "cal_3_2025-04-05": {"tripSeq": "4"}, "cal_3_2025-05-25": {"tripSeq": "5"}, "cal_3_2025-07-04": {"tripSeq": "6"}, "cal_3_2025-08-25": {"tripSeq": "7"}, "cal_3_2025-10-05": {"tripSeq": "8"}, "cal_3_2025-12-01": {"tripSeq": "9"}, "cal_3_2026-01-25": {"tripSeq": "1"}, "cal_3_2026-03-29": {"tripSeq": "2"}, "cal_3_2026-05-10": {"tripSeq": "3"}, "cal_3_2026-06-25": {"tripSeq": "4"}}, "4": {"cal_4_2025-06-21": {"tripSeq": "1"}, "cal_4_2025-07-25": {"tripSeq": "2"}, "cal_4_2025-09-07": {"tripSeq": "3"}, "cal_4_2025-10-17": {"tripSeq": "4"}, "cal_4_2025-12-04": {"tripSeq": "5"}, "cal_4_2026-01-25": {"tripSeq": "1"}, "cal_4_2026-03-10": {"tripSeq": "2"}, "cal_4_2026-04-21": {"rrAdj": 4.5, "tripSeq": "3"}, "cal_4_2026-06-03": {"tripSeq": "5"}, "cal_4_2026-07-17": {"tripSeq": "5"}, "cal_4_2026-08-23": {"tripSeq": "6"}, "cal_4_2026-09-27": {"tripSeq": "7"}, "cal_4_2026-11-01": {"tripSeq": "8"}, "cal_4_2026-12-06": {"tripSeq": "9"}}, "5": {"cal_5_2025-07-01": {"tripSeq": "1"}, "cal_5_2025-08-18": {"tripSeq": "2"}, "cal_5_2025-09-29": {"tripSeq": "3"}, "cal_5_2025-10-31": {"tripSeq": "4"}, "cal_5_2026-01-02": {"tripSeq": "1"}, "cal_5_2026-02-13": {"tripSeq": "2"}, "cal_5_2026-03-27": {"tripSeq": "3"}, "cal_5_2026-05-14": {"tripSeq": "4"}, "cal_5_2026-06-26": {"tripSeq": "5"}, "cal_5_2026-08-01": {"tripSeq": "6"}, "cal_5_2026-09-03": {"tripSeq": "7"}, "cal_5_2026-10-09": {"tripSeq": "8"}, "cal_5_2026-11-23": {"tripSeq": "9"}}, "6": {"cal_6_2024-06-18": {"tripSeq": "1"}, "cal_6_2024-08-07": {"tripSeq": "2"}, "cal_6_2024-09-17": {"tripSeq": "3"}, "cal_6_2024-11-05": {"tripSeq": "4"}, "cal_6_2024-12-20": {"tripSeq": "1"}, "cal_6_2025-01-20": {"tripSeq": "2"}, "cal_6_2025-03-03": {"tripSeq": "3"}, "cal_6_2025-04-15": {"tripSeq": "4"}, "cal_6_2025-05-20": {"tripSeq": "5"}, "cal_6_2025-07-05": {"tripSeq": "6"}, "cal_6_2025-08-19": {"tripSeq": "7"}, "cal_6_2025-10-06": {"tripSeq": "8"}, "cal_6_2025-11-21": {"tripSeq": "9"}, "cal_6_2025-12-21": {"tripSeq": "1"}, "cal_6_2026-02-04": {"tripSeq": "2"}, "cal_6_2026-03-26": {"tripSeq": "3"}, "cal_6_2026-05-09": {"tripSeq": "4"}, "cal_6_2026-06-22": {"tripSeq": "5"}, "cal_6_2026-08-01": {"tripSeq": "6"}, "cal_6_2026-09-02": {"tripSeq": "7"}, "cal_6_2026-10-14": {"tripSeq": "8"}, "cal_6_2026-11-13": {"tripSeq": "9"}}, "7": {"cal_7_2024-12-17": {"tripSeq": "1"}, "cal_7_2025-01-31": {"tripSeq": "2"}, "cal_7_2025-02-12": {"tripSeq": "3"}, "cal_7_2025-03-27": {"tripSeq": "4"}, "cal_7_2025-05-09": {"tripSeq": "5"}, "cal_7_2025-06-23": {"tripSeq": "6"}, "cal_7_2025-08-07": {"tripSeq": "7"}, "cal_7_2025-09-16": {"tripSeq": "8"}, "cal_7_2025-10-29": {"tripSeq": "9"}, "cal_7_2025-12-03": {"rrAdj": -3.0, "tripSeq": "1"}, "cal_7_2026-01-12": {"tripSeq": "2"}, "cal_7_2026-02-24": {"tripSeq": "3"}, "cal_7_2026-04-15": {"tripSeq": "4"}, "cal_7_2026-05-11": {"tripSeq": "5"}, "cal_7_2026-07-06": {"tripSeq": "6"}, "cal_7_2026-08-19": {"tripSeq": "7"}, "cal_7_2026-10-01": {"tripSeq": "8"}, "cal_7_2026-11-05": {"tripSeq": "9"}}, "8": {"cal_8_2025-02-04": {"tripSeq": "1"}, "cal_8_2025-03-18": {"tripSeq": "2"}, "cal_8_2025-04-29": {"tripSeq": "3"}, "cal_8_2025-06-13": {"tripSeq": "4"}, "cal_8_2025-07-26": {"tripSeq": "5"}, "cal_8_2025-09-03": {"tripSeq": "6"}, "cal_8_2025-10-14": {"tripSeq": "7"}, "cal_8_2025-11-20": {"tripSeq": "8"}, "cal_8_2026-01-04": {"tripSeq": "1"}, "cal_8_2026-02-20": {"tripSeq": "2"}, "cal_8_2026-03-19": {"tripSeq": "3"}, "cal_8_2026-04-26": {"tripSeq": "4"}, "cal_8_2026-05-20": {"tripSeq": "5"}, "cal_8_2026-06-20": {"tripSeq": "6"}, "cal_8_2026-08-08": {"tripSeq": "7"}, "cal_8_2026-09-17": {"tripSeq": "8"}, "cal_8_2026-10-27": {"tripSeq": "9"}}, "9": {"cal_9_2025-02-16": {"tripSeq": "1"}, "cal_9_2025-04-02": {"tripSeq": "2"}, "cal_9_2025-05-26": {"tripSeq": "3"}, "cal_9_2025-07-11": {"tripSeq": "4"}, "cal_9_2025-08-20": {"tripSeq": "5"}, "cal_9_2025-09-30": {"tripSeq": "6"}, "cal_9_2025-11-11": {"tripSeq": "7"}, "cal_9_2025-12-17": {"tripSeq": "8"}, "cal_9_2026-01-21": {"tripSeq": "1"}, "cal_9_2026-03-09": {"tripSeq": "2"}, "cal_9_2026-04-18": {"rrAdj": -1.5, "tripSeq": "3"}, "cal_9_2026-05-31": {"rrAdj": -0.5, "tripSeq": "4"}, "cal_9_2026-07-16": {"tripSeq": "5"}, "cal_9_2026-08-17": {"tripSeq": "6"}, "cal_9_2026-09-20": {"tripSeq": "7"}, "cal_9_2026-10-20": {"tripSeq": "8"}, "cal_9_2026-11-19": {"tripSeq": "9"}}, "10": {"cal_10_2026-03-30": {"rrAdj": 2.5}, "cal_10_2026-05-18": {"rrAdj": 0.5}}, "11": {"cal_11_2026-01-12": {"tripSeq": "1"}, "cal_11_2026-03-02": {"tripSeq": "2"}, "cal_11_2026-04-20": {"tripSeq": "3"}}}, "rrManualRows": {}, "holidays": {"2025-01-01": "Tahun Baru", "2025-01-27": "Isra Mi'raj", "2025-01-29": "Imlek", "2025-03-28": "Nyepi", "2025-03-29": "Nyepi", "2025-03-31": "Idul Fitri", "2025-04-01": "Idul Fitri", "2025-04-02": "Idul Fitri", "2025-04-03": "Idul Fitri", "2025-04-04": "Idul Fitri", "2025-04-07": "Idul Fitri", "2025-04-18": "Jumat Agung", "2025-04-20": "Paskah", "2025-05-01": "Hari Buruh", "2025-05-12": "Waisak", "2025-05-29": "Kenaikan Yesus", "2025-05-30": "Kenaikan Yesus", "2025-06-01": "Hari Lahir Pancasila", "2025-06-06": "Idul Adha", "2025-06-09": "Idul Adha", "2025-06-27": "1 Muharam 1447H", "2025-08-17": "Kemerdekaan NKRI", "2025-09-05": "Maulid Nabi Muhammad SAW", "2025-12-25": "Natal", "2025-12-26": "Natal", "2026-01-01": "Tahun Baru Masehi", "2026-01-16": "Isra Mi'raj", "2026-02-17": "Imlek", "2026-03-19": "Idul Fitri", "2026-03-20": "Idul Fitri", "2026-04-03": "Jumat Agung", "2026-04-05": "Paskah", "2026-05-01": "Hari Buruh", "2026-05-08": "Waisak", "2026-05-14": "Kenaikan Yesus Kristus", "2026-06-01": "Hari Lahir Pancasila", "2026-06-06": "Idul Adha", "2026-06-26": "Tahun Baru Islam 1448 H", "2026-08-17": "HUT NKRI", "2026-08-25": "Maulid Nabi Muhammad SAW", "2026-12-25": "Kelahiran Yesus Kristus", "2027-01-01": "Tahun Baru Masehi", "2027-01-05": "Isra Miraj", "2027-02-06": "Imlek", "2027-03-09": "Imlek", "2027-03-10": "Idul Fitri", "2027-03-11": "Idul Fitri", "2027-03-26": "Jumat Agung", "2027-03-28": "Paskah", "2027-05-01": "May Day", "2027-05-06": "Kenaikan Yesus Kristus", "2027-05-16": "Hari Raya Waisak", "2027-06-01": "Hari Lahir Pancasila", "2027-06-06": "Tahun Baru Islam 1449 H", "2027-08-15": "Maulid Nabi Muhammad SAW", "2027-08-17": "HUT NKRI", "2027-12-25": "Hari Raya Natal", "2027-12-26": "Hari Raya Natal 2", "2015-01-01": "Tahun Baru Masehi", "2015-05-01": "Hari Buruh", "2015-06-01": "Hari Lahir Pancasila", "2015-08-17": "HUT NKRI", "2015-12-25": "Hari Raya Natal", "2015-12-26": "Hari Raya Natal 2", "2016-01-01": "Tahun Baru Masehi", "2016-05-01": "Hari Buruh", "2016-06-01": "Hari Lahir Pancasila", "2016-08-17": "HUT NKRI", "2016-12-25": "Hari Raya Natal", "2016-12-26": "Hari Raya Natal 2", "2017-01-01": "Tahun Baru Masehi", "2017-05-01": "Hari Buruh", "2017-06-01": "Hari Lahir Pancasila", "2017-08-17": "HUT NKRI", "2017-12-25": "Hari Raya Natal", "2017-12-26": "Hari Raya Natal 2", "2018-01-01": "Tahun Baru Masehi", "2018-05-01": "Hari Buruh", "2018-06-01": "Hari Lahir Pancasila", "2018-08-17": "HUT NKRI", "2018-12-25": "Hari Raya Natal", "2018-12-26": "Hari Raya Natal 2", "2019-01-01": "Tahun Baru Masehi", "2019-05-01": "Hari Buruh", "2019-06-01": "Hari Lahir Pancasila", "2019-08-17": "HUT NKRI", "2019-12-25": "Hari Raya Natal", "2019-12-26": "Hari Raya Natal 2", "2020-01-01": "Tahun Baru Masehi", "2020-05-01": "Hari Buruh", "2020-06-01": "Hari Lahir Pancasila", "2020-08-17": "HUT NKRI", "2020-12-25": "Hari Raya Natal", "2020-12-26": "Hari Raya Natal 2", "2021-01-01": "Tahun Baru Masehi", "2021-05-01": "Hari Buruh", "2021-06-01": "Hari Lahir Pancasila", "2021-08-17": "HUT NKRI", "2021-12-25": "Hari Raya Natal", "2021-12-26": "Hari Raya Natal 2", "2022-01-01": "Tahun Baru Masehi", "2022-05-01": "Hari Buruh", "2022-06-01": "Hari Lahir Pancasila", "2022-08-17": "HUT NKRI", "2022-12-25": "Hari Raya Natal", "2022-12-26": "Hari Raya Natal 2", "2023-01-01": "Tahun Baru Masehi", "2023-05-01": "Hari Buruh", "2023-06-01": "Hari Lahir Pancasila", "2023-08-17": "HUT NKRI", "2023-12-25": "Hari Raya Natal", "2023-12-26": "Hari Raya Natal 2", "2024-01-01": "Tahun Baru Masehi", "2024-05-01": "Hari Buruh", "2024-06-01": "Hari Lahir Pancasila", "2024-08-17": "HUT NKRI", "2024-12-25": "Hari Raya Natal", "2024-12-26": "Hari Raya Natal 2", "2026-12-26": "Hari Raya Natal 2", "2028-01-01": "Tahun Baru Masehi", "2028-05-01": "Hari Buruh", "2028-06-01": "Hari Lahir Pancasila", "2028-08-17": "HUT NKRI", "2028-12-25": "Hari Raya Natal", "2028-12-26": "Hari Raya Natal 2", "2029-01-01": "Tahun Baru Masehi", "2029-05-01": "Hari Buruh", "2029-06-01": "Hari Lahir Pancasila", "2029-08-17": "HUT NKRI", "2029-12-25": "Hari Raya Natal", "2029-12-26": "Hari Raya Natal 2", "2030-01-01": "Tahun Baru Masehi", "2030-05-01": "Hari Buruh", "2030-06-01": "Hari Lahir Pancasila", "2030-08-17": "HUT NKRI", "2030-12-25": "Hari Raya Natal", "2030-12-26": "Hari Raya Natal 2"}, "deletedFixedHolidays": {}, "birthdays": [{"id": "bday_5", "mmdd": "01-01", "empId": 5, "name": "Muhamad Antoni Rizki"}, {"id": "bday_1", "mmdd": "01-13", "empId": 1, "name": "Winner Saragih"}, {"id": "bday_8", "mmdd": "01-14", "empId": 8, "name": "Mario Yuven"}, {"id": "bday_10", "mmdd": "03-07", "empId": 10, "name": "Anandito Stefan Imanuel Nugroho"}, {"id": "bday_wt", "mmdd": "03-19", "empId": null, "name": "William Tambunan"}, {"id": "bday_7", "mmdd": "03-20", "empId": 7, "name": "Adjar Landung Pambudi"}, {"id": "bday_11", "mmdd": "03-20", "empId": 11, "name": "Ester Christiani Sitompul"}, {"id": "bday_2", "mmdd": "09-11", "empId": 2, "name": "Hosea Dongalemba"}, {"id": "bday_6", "mmdd": "10-10", "empId": 6, "name": "Muhamad Farhan Prawiratama"}, {"id": "bday_9", "mmdd": "10-15", "empId": 9, "name": "Andi Tawaqqal"}, {"id": "bday_4", "mmdd": "11-13", "empId": 4, "name": "Michael Jerrycho Purba"}, {"id": "bday_3", "mmdd": "11-17", "empId": 3, "name": "Muhammad Irvan F Satria"}], "years": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030], "hiddenYears": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "darkMode": true};
+/*__ROSTER_DATA_END__*/
+const STORAGE_KEY = 'mine_roster_offline_v8';
+
+const FIXED_HOLIDAYS_MAP = {
+  '01-01': 'Tahun Baru Masehi',
+  '05-01': 'Hari Buruh',
+  '06-01': 'Hari Lahir Pancasila',
+  '08-17': 'HUT NKRI',
+  '12-25': 'Hari Raya Natal',
+  '12-26': 'Hari Raya Natal 2'
+};
+
+let appState = null;
+let undoStack = [];
+let redoStack = [];
+const MAX_UNDO = 40;
+let gdocsActiveCell = null; // { empId, dateStr, editorName }
+
+let filterState = {
+  years: [2026],
+  months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+};
+
+let rrFilterMode = 'ALL'; // 'ALL' or 'CURRENT'
+let auditFilterMode = 'ALL'; // 'ALL', 'TODAY', or 'MONTH'
+
+let holModalState = {
+  year: 2026,
+  month: 1,
+  selectedDate: '2026-01-01'
+};
+
+let allDatesTimeline = [];
+let empDailyCache = {};
+
+function initServerSync() {
+  if (!isOnlineServer) return;
+  const linkBtn = document.getElementById('linkServerFileBtn');
+  if (linkBtn) {
+    linkBtn.textContent = '🟢 Server Online (Live Sync)';
+    linkBtn.style.background = '#059669';
+    linkBtn.style.borderColor = '#10b981';
+    linkBtn.title = 'Running on live open-source network server';
+    linkBtn.onclick = () => { showToast('Connected to local server! All changes sync across PCs in real-time.'); };
+  }
+
+  // Initial fetch of latest server state
+  fetch('/api/data')
+    .then(r => r.json())
+    .then(data => {
+      if (data && data.employees && data.employees.length) {
+        appState = data;
+        applyTheme();
+        buildTimelineDates();
+        recomputeDailyCache();
+        renderSelectorPanel();
+        renderCalendarTab();
+        populateLedgerSelect();
+        renderEmployeeLedger();
+        renderAuditLog();
+      }
+    })
+    .catch(() => {});
+
+  // Subscribe to real-time events from server (Server-Sent Events)
+  if (window.EventSource) {
+    const evtSource = new EventSource('/api/events');
+    evtSource.onmessage = (e) => {
+      try {
+        const payload = JSON.parse(e.data);
+        if (payload.type === 'ROSTER_UPDATED' && payload.clientId !== clientSessionId) {
+          appState = payload.state;
+          applyTheme();
+          buildTimelineDates();
+          recomputeDailyCache();
+          renderSelectorPanel();
+          renderCalendarTab();
+          populateLedgerSelect();
+          renderEmployeeLedger();
+          renderAuditLog();
+          showToast(`⚡ Updated live by ${payload.sender}`);
+        }
+      } catch (err) {}
+    };
+  }
+}
+
+
+const DOW_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
+const MONTH_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function formatDateLong(dStr) {
+  if (!dStr || typeof dStr !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(dStr)) return dStr || '—';
+  const [y, m, d] = dStr.split('-');
+  const dayNum = parseInt(d, 10);
+  const mIdx = parseInt(m, 10) - 1;
+  return `${dayNum} ${MONTH_FULL[mIdx] || m} ${y}`;
+}
+
+function getShortPossessiveName(emp) {
+  if (!emp || !emp.name) return 'Engineer';
+  const parts = emp.name.replace(/\bM\.?\s+/i, '').trim().split(/\s+/);
+  return parts[0] || emp.name;
+}
+
+// Auto-detect PC Account Username from file:/// path if available, and match to Engineer Full Name
+function detectPCUserName() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY + '_active_user');
+    if (saved) return saved;
+    const path = decodeURIComponent(window.location.pathname || '');
+    const m = path.match(/\/(?:Users|home)\/([^/]+)\//i);
+    if (m && m[1]) {
+      const rawUser = m[1].trim();
+      const lower = rawUser.toLowerCase();
+      if (appState && appState.employees) {
+        for (const emp of appState.employees) {
+          const fn = (emp.fullName || emp.name).toLowerCase();
+          const tokens = fn.split(/\s+/);
+          if (fn.includes(lower) || tokens.some(t => t.length >= 3 && lower.includes(t))) {
+            return emp.fullName || emp.name;
+          }
+        }
+      }
+      return rawUser;
+    }
+  } catch (e) {}
+  return 'Winner Saragih';
+}
+
+function initActiveUserPicker() {
+  const detected = detectPCUserName();
+  if (!appState.activeUser) appState.activeUser = detected;
+  const sel = document.getElementById('activeUserSelect');
+  if (!sel) return;
+  const names = appState.employees.map(e => e.fullName || e.name);
+  if (!names.includes(appState.activeUser)) {
+    names.unshift(appState.activeUser);
+  }
+  sel.innerHTML = [
+    ...names.map(n => `<option value="${n.replace(/"/g, '&quot;')}" ${n === appState.activeUser ? 'selected' : ''}>${n}</option>`),
+    `<option value="__CUSTOM__">+ Set Custom PC User...</option>`
+  ].join('');
+}
+
+function changeActiveUser(val) {
+  if (val === '__CUSTOM__') {
+    const custom = prompt('Enter your User Name for Audit Logs:', appState.activeUser || '');
+    if (custom && custom.trim()) {
+      appState.activeUser = custom.trim();
+      localStorage.setItem(STORAGE_KEY + '_active_user', appState.activeUser);
+    }
+    initActiveUserPicker();
+    return;
+  }
+  appState.activeUser = val;
+  localStorage.setItem(STORAGE_KEY + '_active_user', val);
+}
+
+// Get active birthdays for a given date YYYY-MM-DD (excludes hidden/resigned engineers)
+function getActiveBirthdaysOnDate(dStr) {
+  if (!dStr || dStr.length < 10 || !appState.birthdays) return [];
+  const mmdd = dStr.slice(5, 10);
+  const matches = [];
+  for (const b of appState.birthdays) {
+    if (b.mmdd !== mmdd) continue;
+    if (b.empId !== null && b.empId !== undefined) {
+      const emp = appState.employees.find(e => e.id === b.empId);
+      if (!emp || emp.resignedHidden) continue;
+      matches.push(emp.fullName || emp.name || b.name);
+    } else {
+      matches.push(b.name);
+    }
+  }
+  return matches;
+}
+
+function ensureFixedHolidaysForYear(yr) {
+  if (!appState.deletedFixedHolidays) appState.deletedFixedHolidays = {};
+  for (const [mmdd, hname] of Object.entries(FIXED_HOLIDAYS_MAP)) {
+    const dStr = `${yr}-${mmdd}`;
+    if (!appState.holidays[dStr] && !appState.deletedFixedHolidays[dStr]) {
+      appState.holidays[dStr] = hname;
+    }
+  }
+}
+
+function buildTimelineDates() {
+  allDatesTimeline = [];
+  const years = appState.years || [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030];
+  for (const yr of years) {
+    ensureFixedHolidaysForYear(yr);
+  }
+  const minY = Math.min(...years, 2015);
+  const maxY = Math.max(...years, 2030);
+  const start = new Date(Date.UTC(minY, 0, 1));
+  const end = new Date(Date.UTC(maxY, 11, 31));
+  for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
+    allDatesTimeline.push(d.toISOString().slice(0, 10));
+  }
+}
+
+let serverFileHandle = null;
+let lastKnownFileModified = 0;
+let isSavingFile = false;
+let isOnlineServer = window.location.protocol.startsWith('http');
+let clientSessionId = 'client_' + Math.random().toString(36).substring(2, 9);
+
+// Always load state directly from the HTML file's embedded FACTORY_DATA (never localStorage!)
+function loadState() {
+  appState = JSON.parse(JSON.stringify(FACTORY_DATA));
+  if (!appState.auditLog || !appState.auditLog.length) {
+    const todayIso = new Date().toISOString().slice(0, 10);
+    appState.auditLog = [
+      { ts: nowStr(), dateIso: todayIso, target: 'System', msg: 'Initialized Roster Mine Plan (2015–2030).' }
+    ];
+  }
+  if (!appState.h15Days) appState.h15Days = {};
+  if (!appState.rrOverrides) appState.rrOverrides = {};
+  if (!appState.rrManualRows) appState.rrManualRows = {};
+  if (!appState.deletedFixedHolidays) appState.deletedFixedHolidays = {};
+  if (!appState.birthdays) appState.birthdays = [];
+  if (!appState.years) appState.years = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030];
+  if (!appState.hiddenYears) appState.hiddenYears = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+  if (appState.darkMode === undefined) appState.darkMode = true;
+}
+
+// Build complete, self-contained HTML string with the latest appState baked into FACTORY_DATA
+function buildUpdatedSelfHtml() {
+  const clone = document.documentElement.cloneNode(true);
+  // Clear dynamic containers in the serialized snapshot so the HTML file stays lean and fast
+  const calCont = clone.querySelector('#calendarMonthsContainer');
+  if (calCont) calCont.innerHTML = '';
+  const ledBody = clone.querySelector('#empLedgerTable tbody');
+  if (ledBody) ledBody.innerHTML = '';
+  const audBody = clone.querySelector('#auditLogTable tbody');
+  if (audBody) audBody.innerHTML = '';
+  clone.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+  const toast = clone.querySelector('#toastMsg');
+  if (toast) toast.classList.remove('show');
+
+  let rawHtml = '<!DOCTYPE html>\n' + clone.outerHTML;
+  const serializedState = JSON.stringify(appState);
+  rawHtml = rawHtml.replace(
+    /\/\*__ROSTER_DATA_START__\*\/[\s\S]*?\/\*__ROSTER_DATA_END__\*\//,
+    `/*__ROSTER_DATA_START__*/\nconst FACTORY_DATA = ${serializedState};\n/*__ROSTER_DATA_END__*/`
+  );
+  return rawHtml;
+}
+
+// Connect to the shared .html file on the server folder for automatic multi-PC read/write sync
+async function connectServerHtmlFile() {
+  if (!window.showOpenFilePicker) {
+    alert('Your browser does not support direct folder file linking. Use the "💾 Save HTML" button to save the updated HTML file to the server folder.');
+    return;
+  }
+  try {
+    const [handle] = await window.showOpenFilePicker({
+      types: [{ description: 'HTML Roster File', accept: { 'text/html': ['.html', '.htm'] } }],
+      multiple: false
+    });
+    serverFileHandle = handle;
+    const file = await serverFileHandle.getFile();
+    lastKnownFileModified = file.lastModified;
+
+    // Load latest FACTORY_DATA from the selected server file immediately in case another PC updated it
+    const text = await file.text();
+    const match = text.match(/\/\*__ROSTER_DATA_START__\*\/\s*const FACTORY_DATA = (\{[\s\S]*?\});\s*\/\*__ROSTER_DATA_END__\*\//);
+    if (match && match[1]) {
+      appState = JSON.parse(match[1]);
+      applyTheme();
+      initActiveUserPicker();
+      buildTimelineDates();
+      recomputeDailyCache();
+      renderSelectorPanel();
+      renderCalendarTab();
+      populateLedgerSelect();
+      renderEmployeeLedger();
+      renderAuditLog();
+    }
+
+    const btn = document.getElementById('linkServerFileBtn');
+    if (btn) {
+      btn.textContent = '🟢 Linked to Server File (Auto-Saving)';
+      btn.style.background = '#059669';
+      btn.style.borderColor = '#10b981';
+    }
+    showToast('Linked to Server HTML File! All edits now auto-save to the server file.');
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      console.warn('File link cancelled or failed:', err);
+    }
+  }
+}
+
+// Write updated HTML directly into serverFileHandle (or prompt Save As / download)
+async function writeStateToHtmlFile(promptIfUnlinked) {
+  const updatedHtml = buildUpdatedSelfHtml();
+  if (serverFileHandle) {
+    try {
+      isSavingFile = true;
+      const writable = await serverFileHandle.createWritable();
+      await writable.write(updatedHtml);
+      await writable.close();
+      const f = await serverFileHandle.getFile();
+      lastKnownFileModified = f.lastModified;
+      isSavingFile = false;
+      clearUnsavedIndicator();
+      return true;
+    } catch (err) {
+      isSavingFile = false;
+      console.warn('Auto-save to linked file failed:', err);
+    }
+  }
+
+  if (promptIfUnlinked) {
+    if (window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: 'roster_mine_plan_offline.html',
+          types: [{ description: 'HTML Roster File', accept: { 'text/html': ['.html'] } }]
+        });
+        serverFileHandle = handle;
+        isSavingFile = true;
+        const writable = await serverFileHandle.createWritable();
+        await writable.write(updatedHtml);
+        await writable.close();
+        const f = await serverFileHandle.getFile();
+        lastKnownFileModified = f.lastModified;
+        isSavingFile = false;
+        const btn = document.getElementById('linkServerFileBtn');
+        if (btn) {
+          btn.textContent = '🟢 Linked to Server File (Auto-Saving)';
+          btn.style.background = '#059669';
+          btn.style.borderColor = '#10b981';
+        }
+        clearUnsavedIndicator();
+        showToast('Saved & Linked to HTML file on server!');
+        return true;
+      } catch (err) {
+        isSavingFile = false;
+        if (err.name === 'AbortError') return false;
+      }
+    }
+    // Fallback download of the self-contained updated HTML file
+    const blob = new Blob([updatedHtml], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'roster_mine_plan_offline.html';
+    a.click();
+    URL.revokeObjectURL(url);
+    clearUnsavedIndicator();
+    showToast('Downloaded updated roster_mine_plan_offline.html');
+    return true;
+  }
+  return false;
+}
+
+
+function clearUnsavedIndicator() {
+  const saveBtn = document.getElementById('saveHtmlManualBtn');
+  if (saveBtn) {
+    saveBtn.style.background = '';
+    saveBtn.style.color = '';
+    saveBtn.style.borderColor = '';
+    saveBtn.textContent = '💾 Save HTML';
+  }
+}
+
+function saveToSelfHtmlFile() {
+  writeStateToHtmlFile(true);
+}
+
+// Background watcher: if linked to the server HTML file, check every 4 seconds if another PC saved a newer version!
+setInterval(async () => {
+  if (!serverFileHandle || isSavingFile) return;
+  try {
+    const file = await serverFileHandle.getFile();
+    if (file.lastModified > lastKnownFileModified) {
+      lastKnownFileModified = file.lastModified;
+      const text = await file.text();
+      const match = text.match(/\/\*__ROSTER_DATA_START__\*\/\s*const FACTORY_DATA = (\{[\s\S]*?\});\s*\/\*__ROSTER_DATA_END__\*\//);
+      if (match && match[1]) {
+        appState = JSON.parse(match[1]);
+        applyTheme();
+        initActiveUserPicker();
+        buildTimelineDates();
+        recomputeDailyCache();
+        renderSelectorPanel();
+        renderCalendarTab();
+        populateLedgerSelect();
+        renderEmployeeLedger();
+        renderAuditLog();
+        showToast('🔄 Synced new changes from another PC!');
+      }
+    }
+  } catch (e) {}
+}, 4000);
+
+function applyTheme() {
+  document.body.classList.toggle('dark-mode', Boolean(appState.darkMode));
+  const btn = document.getElementById('themeToggleBtn');
+  if (btn) {
+    btn.innerHTML = appState.darkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+  }
+}
+
+function toggleDarkMode() {
+  appState.darkMode = !appState.darkMode;
+  applyTheme();
+  saveState();
+}
+
+function getActiveEditorName() {
+  return appState.activeUser || 'Anandito Stefan Imanuel Nugroho';
+}
+
+function initActiveUserPicker() {
+  const sel = document.getElementById('activeUserSelect');
+  if (!sel) return;
+  if (!appState.activeUser) appState.activeUser = 'Anandito Stefan Imanuel Nugroho';
+  const names = appState.employees.map(e => e.fullName || e.name);
+  if (!names.includes(appState.activeUser)) names.unshift(appState.activeUser);
+  sel.innerHTML = names.map(n => `<option value="${n.replace(/"/g, '&quot;')}" ${n === appState.activeUser ? 'selected' : ''}>${n}</option>`).join('');
+}
+
+function changeActiveUser(val) {
+  appState.activeUser = val;
+  saveState('System', `Active editor set to ${val}.`);
+}
+
+function nowStr() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mi = String(d.getMinutes()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+}
+
+function todayIsoLocal() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function getSnapshotString() {
+  return JSON.stringify({
+    employees: appState.employees,
+    transitions: appState.transitions,
+    comments: appState.comments,
+    h15Days: appState.h15Days,
+    rrOverrides: appState.rrOverrides,
+    rrManualRows: appState.rrManualRows,
+    holidays: appState.holidays,
+    deletedFixedHolidays: appState.deletedFixedHolidays,
+    birthdays: appState.birthdays,
+    years: appState.years,
+    hiddenYears: appState.hiddenYears
+  });
+}
+
+function pushUndoSnapshot() {
+  undoStack.push(getSnapshotString());
+  if (undoStack.length > MAX_UNDO) undoStack.shift();
+  redoStack = [];
+  updateUndoButton();
+  updateRedoButton();
+}
+
+function applySnapshot(snap) {
+  appState.employees = snap.employees;
+  appState.transitions = snap.transitions;
+  appState.comments = snap.comments;
+  appState.h15Days = snap.h15Days;
+  appState.rrOverrides = snap.rrOverrides;
+  appState.rrManualRows = snap.rrManualRows;
+  appState.holidays = snap.holidays;
+  appState.deletedFixedHolidays = snap.deletedFixedHolidays || {};
+  appState.birthdays = snap.birthdays || [];
+  appState.years = snap.years;
+  appState.hiddenYears = snap.hiddenYears || [];
+  filterState.years = filterState.years.filter(y => appState.years.includes(y));
+  if (!filterState.years.length) filterState.years = [2026];
+
+  buildTimelineDates();
+  recomputeDailyCache();
+  renderSelectorPanel();
+  renderCalendarTab();
+  populateLedgerSelect();
+  renderEmployeeLedger();
+  renderAuditLog();
+  updateUndoButton();
+  updateRedoButton();
+}
+
+function performUndo() {
+  if (!undoStack.length) return;
+  redoStack.push(getSnapshotString());
+  const snap = JSON.parse(undoStack.pop());
+  applySnapshot(snap);
+  saveState('System', 'Reverted previous action via Undo.');
+  showToast('Undid last action');
+}
+
+function performRedo() {
+  if (!redoStack.length) return;
+  undoStack.push(getSnapshotString());
+  const snap = JSON.parse(redoStack.pop());
+  applySnapshot(snap);
+  saveState('System', 'Re-applied action via Redo.');
+  showToast('Redid action');
+}
+
+function updateUndoButton() {
+  const btn = document.getElementById('undoBtn');
+  if (!btn) return;
+  btn.disabled = undoStack.length === 0;
+  btn.textContent = `↶ Undo (${undoStack.length})`;
+}
+
+function updateRedoButton() {
+  const btn = document.getElementById('redoBtn');
+  if (!btn) return;
+  btn.disabled = redoStack.length === 0;
+  btn.textContent = `↷ Redo (${redoStack.length})`;
+}
+
+window.addEventListener('keydown', (e) => {
+  const tag = (document.activeElement && document.activeElement.tagName) || '';
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !e.shiftKey) {
+    e.preventDefault();
+    performUndo();
+  } else if (((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && e.shiftKey)) {
+    e.preventDefault();
+    performRedo();
+  }
+});
+
+function saveState(targetEmp, logMsg) {
+  let finalTarget = 'System';
+  let finalMsg = null;
+  if (logMsg !== undefined) {
+    finalTarget = targetEmp || 'System';
+    finalMsg = logMsg;
+  } else if (targetEmp) {
+    finalTarget = 'System';
+    finalMsg = targetEmp;
+  }
+  if (finalMsg) {
+    appState.auditLog.unshift({
+      ts: nowStr(),
+      dateIso: todayIsoLocal(),
+      target: finalTarget,
+      msg: finalMsg
+    });
+  }
+  // If running on open-source server, save directly via API and broadcast to all PCs
+  if (isOnlineServer && finalMsg) {
+    fetch('/api/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        state: appState,
+        user: getActiveEditorName(),
+        clientId: clientSessionId
+      })
+    }).then(() => {
+      clearUnsavedIndicator();
+    }).catch(err => {
+      console.warn('Server save failed:', err);
+    });
+  } else if (serverFileHandle) {
+    writeStateToHtmlFile(false);
+  } else if (finalMsg) {
+    const saveBtn = document.getElementById('saveHtmlManualBtn');
+    if (saveBtn) {
+      saveBtn.style.background = '#f59e0b';
+      saveBtn.style.color = '#090d16';
+      saveBtn.style.borderColor = '#fbbf24';
+      saveBtn.textContent = '💾 Save HTML (Unsaved*)';
+    }
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toastMsg');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Recompute daily codes for all employees across allDatesTimeline (2015-2030+)
+// Includes Adjacent Same-Prefix Continuation Rule:
+// If there is an existing P-01 (e.g. O-01 on Aug 1) and the user sets an earlier date (e.g. July 26) to P-01 (O-01)
+// so that July 31 is O-06 and touches Aug 1 (O-01), Aug 1 continues from July 26 as O-07 instead of resetting to O-01!
+function recomputeDailyCache() {
+  empDailyCache = {};
+  const WORK_SET = new Set(['W', 'BST']);
+  const OFF_SET = new Set(['O', 'A', 'ORR', 'X']);
+  const getGroup = (p) => WORK_SET.has(p) ? 'WORK' : (OFF_SET.has(p) ? 'OFF' : null);
+
+  for (const emp of appState.employees) {
+    const eid = emp.id;
+    const trans = appState.transitions[eid] || {};
+    const daily = {};
+    let curPrefix = null;
+    let curGroup = null;
+    let curNum = 0;
+
+    const empStartYm = `${emp.startYear || 2015}-${String(emp.startMonth || 1).padStart(2, '0')}`;
+
+    for (let i = 0; i < allDatesTimeline.length; i++) {
+      const dStr = allDatesTimeline[i];
+      if (dStr.slice(0, 7) < empStartYm) continue;
+
+      const seed = trans[dStr];
+      let isSeed = false;
+
+      if (seed === 'STOP') {
+        curPrefix = null;
+        curGroup = null;
+        curNum = 0;
+        continue;
+      }
+
+      if (seed) {
+        const parts = seed.split('-');
+        const seedPrefix = parts[0].toUpperCase();
+        const seedGroup = getGroup(seedPrefix);
+        const explicitNum = (parts.length > 1 && parseInt(parts[1], 10)) || null;
+
+        // Group-based Numbering Rule:
+        // - Work roster list: W, BST
+        // - Off roster list: O, A, ORR, X
+        // If adjacent to each other within the same group, the number continues!
+        // e.g. for off: a-01, a-02, o-03, orr-04
+        // e.g. for work: w-01, w-02, bst-03, w-04
+        // If transitioning from work to off, or off to work, the counter resets to 01.
+        if (curGroup !== null && seedGroup === curGroup) {
+          curNum += 1;
+          curPrefix = seedPrefix;
+        } else {
+          curNum = (explicitNum && explicitNum > 1 && !['01', '1'].includes(parts[1])) ? explicitNum : 1;
+          curPrefix = seedPrefix;
+          curGroup = seedGroup;
+          isSeed = true;
+        }
+      } else if (curPrefix !== null) {
+        curNum += 1;
+      }
+
+      if (curPrefix !== null) {
+        const numStr = curNum < 10 ? '0' + curNum : String(curNum);
+        const code = curPrefix + '-' + numStr;
+        const isH15 = Boolean(appState.h15Days[`${eid}|${dStr}`]);
+        daily[dStr] = {
+          code,
+          prefix: curPrefix,
+          num: curNum,
+          group: curGroup,
+          isSeed,
+          isTRI: false,
+          isTRO: false,
+          isH15
+        };
+      }
+    }
+
+    // Second pass: Travel In (isTRI) and Travel Out (isTRO) ONLY on Work Day ('W') cells.
+    // Travel days only work if it is from off to work (Travel In) or work to off (Travel Out).
+    // BST to work day and vice versa does not have travel days since both are work days.
+    // Between off days (O, A, ORR, X), no travel day exists.
+    for (let i = 0; i < allDatesTimeline.length; i++) {
+      const dStr = allDatesTimeline[i];
+      const todayCell = daily[dStr];
+      if (!todayCell || todayCell.prefix !== 'W') continue;
+
+      const prevStr = i > 0 ? allDatesTimeline[i - 1] : null;
+      const nextStr = i < allDatesTimeline.length - 1 ? allDatesTimeline[i + 1] : null;
+      const prevCell = prevStr ? daily[prevStr] : null;
+      const nextCell = nextStr ? daily[nextStr] : null;
+
+      // Travel In: first work day after off (or start of work)
+      if (!prevCell || prevCell.group === 'OFF') {
+        todayCell.isTRI = true;
+      }
+      // Travel Out: last work day before off
+      if (!todayCell.isTRI && nextCell && nextCell.group === 'OFF') {
+        todayCell.isTRO = true;
+      }
+    }
+
+    empDailyCache[eid] = daily;
+  }
+}
+
+function isPhysicallyOnsite(eid, dStr) {
+  const emp = appState.employees.find(e => e.id === eid);
+  if (!emp || emp.resignedHidden) return false;
+  const cell = empDailyCache[eid] && empDailyCache[eid][dStr];
+  if (!cell) return false;
+  if (cell.isH15) return false;
+  if (cell.prefix !== 'W') return false;
+  if (cell.isTRI || cell.isTRO) return false;
+  return true;
+}
+
+function getEffectiveSection(emp, year, month) {
+  if (emp.id === 2 && (year > 2025 || (year === 2025 && month >= 9))) {
+    return 'STP';
+  }
+  return emp.section;
+}
+
+// Render Sleek Top-to-Bottom Clickable Toggle Columns (No Checkboxes)
+function renderSelectorPanel() {
+  const activeEmps = appState.employees.filter(e => !e.resignedHidden);
+  const ltpEmps = activeEmps.filter(e => e.checkboxGroup === 'LTP');
+  const stpEmps = activeEmps.filter(e => e.checkboxGroup === 'STP');
+
+  const allLtpOn = ltpEmps.length > 0 && ltpEmps.every(e => e.visible);
+  const allStpOn = stpEmps.length > 0 && stpEmps.every(e => e.visible);
+
+  document.getElementById('hdrGroupLTP').classList.toggle('active', allLtpOn);
+  document.getElementById('hdrGroupSTP').classList.toggle('active', allStpOn);
+
+  document.getElementById('tileListLTP').innerHTML = ltpEmps.map(e => `
+    <div class="toggle-tile tile-ltp ${e.visible ? 'active' : ''}" onclick="toggleEmpTile(${e.id})">${e.name}</div>
+  `).join('');
+
+  document.getElementById('tileListSTP').innerHTML = stpEmps.map(e => `
+    <div class="toggle-tile tile-stp ${e.visible ? 'active' : ''}" onclick="toggleEmpTile(${e.id})">${e.name}</div>
+  `).join('');
+
+  document.getElementById('hdrAllMonths').classList.toggle('active', filterState.months.length === 12);
+  let mHtml = '';
+  for (let row = 0; row < 6; row++) {
+    const mLeft = row + 1;
+    const mRight = row + 7;
+    const actL = filterState.months.includes(mLeft) ? 'active' : '';
+    const actR = filterState.months.includes(mRight) ? 'active' : '';
+    mHtml += `
+      <div class="toggle-tile tile-center ${actL}" onclick="toggleMonthTile(${mLeft})">${MONTH_SHORT[mLeft - 1]}</div>
+      <div class="toggle-tile tile-center ${actR}" onclick="toggleMonthTile(${mRight})">${MONTH_SHORT[mRight - 1]}</div>
+    `;
+  }
+  document.getElementById('tileListMonths').innerHTML = mHtml;
+
+  const hiddenSet = new Set(appState.hiddenYears || []);
+  const shownYears = appState.years.filter(y => !hiddenSet.has(y));
+  document.getElementById('tileListYears').innerHTML = shownYears.map(y => `
+    <div class="toggle-tile tile-center ${filterState.years.includes(y) ? 'active' : ''}" onclick="toggleYearTile(${y})">${y}</div>
+  `).join('');
+}
+
+function toggleGroupTile(group) {
+  const emps = appState.employees.filter(e => !e.resignedHidden && e.checkboxGroup === group);
+  const allOn = emps.length > 0 && emps.every(e => e.visible);
+  for (const e of emps) e.visible = !allOn;
+  saveState();
+  renderSelectorPanel();
+  renderCalendarTab();
+}
+
+function toggleEmpTile(empId) {
+  const emp = appState.employees.find(e => e.id === empId);
+  if (emp) emp.visible = !emp.visible;
+  saveState();
+  renderSelectorPanel();
+  renderCalendarTab();
+}
+
+function toggleAllMonthsTile() {
+  filterState.months = (filterState.months.length === 12) ? [1] : [1,2,3,4,5,6,7,8,9,10,11,12];
+  renderSelectorPanel();
+  renderCalendarTab();
+}
+
+function toggleMonthTile(mNum) {
+  const idx = filterState.months.indexOf(mNum);
+  if (idx === -1) {
+    filterState.months.push(mNum);
+    filterState.months.sort((a, b) => a - b);
+  } else if (filterState.months.length > 1) {
+    filterState.months.splice(idx, 1);
+  }
+  renderSelectorPanel();
+  renderCalendarTab();
+}
+
+function toggleYearTile(y) {
+  const idx = filterState.years.indexOf(y);
+  if (idx === -1) {
+    filterState.years.push(y);
+    filterState.years.sort((a, b) => a - b);
+  } else if (filterState.years.length > 1) {
+    filterState.years.splice(idx, 1);
+  }
+  renderSelectorPanel();
+  renderCalendarTab();
+}
+
+function addNewYear() {
+  pushUndoSnapshot();
+  const maxY = Math.max(...appState.years);
+  const nextY = maxY + 1;
+  appState.years.push(nextY);
+  ensureFixedHolidaysForYear(nextY);
+  if (!filterState.years.includes(nextY)) {
+    filterState.years.push(nextY);
+    filterState.years.sort((a, b) => a - b);
+  }
+  buildTimelineDates();
+  recomputeDailyCache();
+  saveState('System', `Added year ${nextY} (with fixed repetitive holidays).`);
+  renderYearsVisGrid();
+  renderSelectorPanel();
+  renderCalendarTab();
+  showToast(`Added Year ${nextY}`);
+}
+
+// HIDE / SHOW YEARS MODAL
+function openYearsVisModal() {
+  renderYearsVisGrid();
+  document.getElementById('yearsVisModal').classList.add('open');
+}
+
+function closeYearsVisModal() {
+  document.getElementById('yearsVisModal').classList.remove('open');
+}
+
+function renderYearsVisGrid() {
+  const el = document.getElementById('yearsVisGrid');
+  if (!el) return;
+  const hiddenSet = new Set(appState.hiddenYears || []);
+  el.innerHTML = appState.years.map(y => {
+    const isVisible = !hiddenSet.has(y);
+    return `
+      <div class="toggle-tile tile-center ${isVisible ? 'active' : ''}" onclick="toggleSingleYearVisibility(${y})">
+        ${y} ${isVisible ? '👁' : '(Hidden)'}
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleSingleYearVisibility(y) {
+  if (!appState.hiddenYears) appState.hiddenYears = [];
+  const idx = appState.hiddenYears.indexOf(y);
+  if (idx >= 0) {
+    appState.hiddenYears.splice(idx, 1);
+  } else {
+    appState.hiddenYears.push(y);
+    filterState.years = filterState.years.filter(yr => yr !== y);
+    if (!filterState.years.length) {
+      const remaining = appState.years.filter(yr => !appState.hiddenYears.includes(yr));
+      filterState.years = remaining.length ? [remaining[0]] : [y];
+    }
+  }
+  saveState();
+  renderYearsVisGrid();
+  renderSelectorPanel();
+  renderCalendarTab();
+}
+
+function setYearsVisibilityRange(fromY, toY, hideThem) {
+  if (!appState.hiddenYears) appState.hiddenYears = [];
+  const set = new Set(appState.hiddenYears);
+  for (const y of appState.years) {
+    if (y >= fromY && y <= toY) {
+      if (hideThem) set.add(y);
+      else set.delete(y);
+    }
+  }
+  appState.hiddenYears = Array.from(set);
+  const visibleYears = appState.years.filter(y => !set.has(y));
+  if (!visibleYears.length && appState.years.length) {
+    const lastY = appState.years[appState.years.length - 1];
+    appState.hiddenYears = appState.hiddenYears.filter(y => y !== lastY);
+  }
+  filterState.years = filterState.years.filter(y => !appState.hiddenYears.includes(y));
+  if (!filterState.years.length) {
+    const vis = appState.years.filter(y => !appState.hiddenYears.includes(y));
+    filterState.years = [vis[0] || 2026];
+  }
+  saveState();
+  renderYearsVisGrid();
+  renderSelectorPanel();
+  renderCalendarTab();
+}
+
+function daysInMonth(year, month) {
+  return new Date(Date.UTC(year, month, 0)).getUTCDate();
+}
+
+function renderCalendarTab() {
+  const container = document.getElementById('calendarMonthsContainer');
+  const visibleEmps = appState.employees.filter(e => !e.resignedHidden && e.visible);
+  const htmlParts = [];
+
+  for (const year of filterState.years) {
+    for (const month of filterState.months) {
+      const numDays = daysInMonth(year, month);
+      const mStr = String(month).padStart(2, '0');
+      const dateList = [];
+      const monthBadges = [];
+
+      for (let d = 1; d <= numDays; d++) {
+        const dPad = String(d).padStart(2, '0');
+        const dStr = `${year}-${mStr}-${dPad}`;
+        const dtObj = new Date(Date.UTC(year, month - 1, d));
+        const dow = dtObj.getUTCDay();
+        const hol = appState.holidays[dStr] || null;
+        const bdays = getActiveBirthdaysOnDate(dStr);
+        if (bdays.length) {
+          monthBadges.push(`<span class="bday-chip">🎂 ${d} ${MONTH_SHORT[month - 1]}: ${bdays.join(' & ')}</span>`);
+        }
+        if (hol) {
+          monthBadges.push(`<span class="holiday-chip">🎉 ${d} ${MONTH_SHORT[month - 1]}: ${hol}</span>`);
+        }
+        dateList.push({ d, dStr, dow, dowName: DOW_NAMES[dow], hol, bdays });
+      }
+
+      let thDates = `<th class="col-no">No</th><th class="col-name">Name</th><th class="col-sec">Section</th><th class="col-stat">Work</th><th class="col-stat">Off</th>`;
+      let thDows = `<th></th><th class="col-name"></th><th></th><th></th><th></th>`;
+
+      for (const item of dateList) {
+        const isWknd = (item.dow === 0 || item.dow === 6);
+        // Priority: Birthday (Yellow) > Holiday (Red) > Weekend
+        let cls = '';
+        if (item.bdays && item.bdays.length > 0) cls = 'th-birthday';
+        else if (item.hol) cls = 'th-holiday';
+        else if (isWknd) cls = 'th-weekend';
+
+        const headerTips = [];
+        if (item.bdays && item.bdays.length) headerTips.push(`Birthday: ${item.bdays.join(', ')}`);
+        if (item.hol) headerTips.push(`Holiday: ${item.hol}`);
+        const titleAttr = headerTips.length ? `title="${headerTips.join(' | ').replace(/"/g, '&quot;')}"` : '';
+
+        thDates += `<th class="col-day ${cls}" ${titleAttr}>${item.d}</th>`;
+        thDows += `<th class="${cls}" ${titleAttr}>${item.dowName}</th>`;
+      }
+
+      let empRowsHtml = '';
+      for (const emp of visibleEmps) {
+        const eid = emp.id;
+        const effSec = getEffectiveSection(emp, year, month);
+        let workCount = 0;
+        let offCount = 0;
+        let dayCellsHtml = '';
+
+        for (const item of dateList) {
+          const cell = empDailyCache[eid] && empDailyCache[eid][item.dStr];
+          const cmt = appState.comments[`${eid}|${item.dStr}`] || '';
+          if (cell) {
+            if (cell.prefix === 'W' || cell.prefix === 'BST') workCount++;
+            if (cell.prefix === 'O' || cell.prefix === 'A' || cell.prefix === 'ORR' || cell.prefix === 'X') offCount++;
+          }
+
+          let cellCls = '';
+          let label = '';
+          if (cell) {
+            label = (cell.isTRI || cell.isTRO) ? `${cell.code} ✈` : cell.code;
+            if (cell.isH15) cellCls = 'cell-H15';
+            else if (cell.isTRI) cellCls = 'cell-TRI';
+            else if (cell.isTRO) cellCls = 'cell-TRO';
+            else if (cell.prefix === 'W') cellCls = 'cell-W';
+            else if (cell.prefix === 'O') cellCls = 'cell-O';
+            else if (cell.prefix === 'A') cellCls = 'cell-A';
+            else if (cell.prefix === 'ORR') cellCls = 'cell-ORR';
+            else if (cell.prefix === 'BST') cellCls = 'cell-BST';
+            else cellCls = 'cell-X';
+            if (cell.isSeed) cellCls += ' cell-seed';
+          }
+
+          const tip = [
+            `${emp.name} (${formatDateLong(item.dStr)})`,
+            cell ? label : 'Blank',
+            cell && cell.isH15 ? 'Hari ke-15' : '',
+            cmt ? `Note: ${cmt}` : '',
+            item.bdays && item.bdays.length ? `Birthday: ${item.bdays.join(', ')}` : '',
+            item.hol ? `Holiday: ${item.hol}` : ''
+          ].filter(Boolean).join(' • ');
+
+          const cmtDot = cmt ? `<span class="comment-dot"></span>` : '';
+          dayCellsHtml += `<td class="day-cell ${cellCls}" title="${tip.replace(/"/g, '&quot;')}" onclick="openCellModal(${eid}, '${item.dStr}')">${label}${cmtDot}</td>`;
+        }
+
+        const nameBg = effSec === 'LTP' ? 'name-ltp' : 'name-stp';
+        empRowsHtml += `<tr>
+          <td>${emp.id}</td>
+          <td class="col-name ${nameBg}">${emp.name}</td>
+          <td><span class="sec-tag sec-${effSec}">${effSec}</span></td>
+          <td style="font-weight:700;">${workCount}</td>
+          <td style="font-weight:700;">${offCount}</td>
+          ${dayCellsHtml}
+        </tr>`;
+      }
+
+      let ltpCells = '';
+      let stpCells = '';
+      for (const item of dateList) {
+        let ltpCount = 0;
+        let stpCount = 0;
+        for (const emp of appState.employees) {
+          if (emp.resignedHidden) continue;
+          const effSec = getEffectiveSection(emp, year, month);
+          if (isPhysicallyOnsite(emp.id, item.dStr)) {
+            if (effSec === 'LTP') ltpCount++;
+            else stpCount++;
+          }
+        }
+        const ltpCls = ltpCount <= 1 ? 'cov-low' : (ltpCount === 2 ? 'cov-mid' : 'cov-ok');
+        const stpCls = stpCount <= 1 ? 'cov-low' : (stpCount === 2 ? 'cov-mid' : 'cov-ok');
+        ltpCells += `<td class="${ltpCls}">${ltpCount}</td>`;
+        stpCells += `<td class="${stpCls}">${stpCount}</td>`;
+      }
+
+      const badgesHtml = monthBadges.length
+        ? `<div class="holiday-chips">${monthBadges.join('')}</div>`
+        : '';
+
+      htmlParts.push(`
+        <div class="month-card">
+          <div class="month-card-header">
+            <h3>${MONTH_FULL[month - 1]} ${year}</h3>
+            ${badgesHtml}
+          </div>
+          <div class="table-scroll">
+            <table class="roster-grid">
+              <thead>
+                <tr>${thDates}</tr>
+                <tr class="dow-header">${thDows}</tr>
+              </thead>
+              <tbody>
+                ${empRowsHtml}
+                <tr class="onsite-row">
+                  <td colspan="5" class="col-name">LTP Onsite</td>
+                  ${ltpCells}
+                </tr>
+                <tr class="onsite-row">
+                  <td colspan="5" class="col-name">STP Onsite</td>
+                  ${stpCells}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `);
+    }
+  }
+
+  container.innerHTML = htmlParts.join('');
+}
+
+// CELL EDIT MODAL
+function openCellModal(empId, dateStr) {
+  const emp = appState.employees.find(e => e.id === empId);
+  const trans = (appState.transitions[empId] && appState.transitions[empId][dateStr]) || null;
+  const curCell = empDailyCache[empId] && empDailyCache[empId][dateStr];
+  const cmt = appState.comments[`${empId}|${dateStr}`] || '';
+  const isH15 = Boolean(appState.h15Days[`${empId}|${dateStr}`]);
+
+  document.getElementById('modalEmpId').value = empId;
+  document.getElementById('modalDateStr').value = dateStr;
+  document.getElementById('cellModalTitle').textContent = `${emp.name} — ${formatDateLong(dateStr)} (${curCell ? curCell.code : 'Blank'})`;
+
+  const sel = document.getElementById('modalActionType');
+  const customInput = document.getElementById('modalCustomCode');
+
+  if (!trans) {
+    sel.value = 'CONTINUE';
+    customInput.value = curCell ? curCell.code : 'W-01';
+  } else if (trans === 'STOP') {
+    sel.value = 'STOP';
+    customInput.value = '';
+  } else {
+    const p = trans.split('-')[0].toUpperCase();
+    if (['W', 'BST', 'O', 'A', 'ORR', 'X'].includes(p) && (!trans.includes('-') || trans.endsWith('-01') || trans === 'W-02')) {
+      sel.value = p;
+      customInput.value = trans;
+    } else {
+      sel.value = 'CUSTOM';
+      customInput.value = trans;
+    }
+  }
+  toggleCustomCodeInput();
+  document.getElementById('modalH15Check').checked = isH15;
+  document.getElementById('modalComment').value = cmt;
+  document.getElementById('cellModal').classList.add('open');
+}
+
+function toggleCustomCodeInput() {
+  const val = document.getElementById('modalActionType').value;
+  document.getElementById('customCodeGroup').style.display = (val === 'CUSTOM') ? 'block' : 'none';
+}
+
+function closeCellModal() {
+  document.getElementById('cellModal').classList.remove('open');
+}
+
+// Clear any manual date overrides in R&R Balance for rotations that touch or overlap dateStr,
+// while strictly preserving remarks, alAdded, and tripSeq!
+function syncCalendarEditWithRROverrides(empId, dateStr) {
+  const ovMap = appState.rrOverrides && appState.rrOverrides[empId];
+  if (!ovMap) return;
+  for (const [rotKey, ov] of Object.entries(ovMap)) {
+    const rotStart = ov.startWork || rotKey.replace(`cal_${empId}_`, '');
+    const rotEnd = ov.finishRR || ov.finishWork || rotStart;
+    // Check if dateStr is within 45 days of this rotation window
+    const tEdit = new Date(dateStr + 'T00:00:00Z').getTime();
+    const tStart = new Date(rotStart + 'T00:00:00Z').getTime() - 15 * 86400000;
+    const tEnd = new Date(rotEnd + 'T00:00:00Z').getTime() + 45 * 86400000;
+    if (tEdit >= tStart && tEdit <= tEnd) {
+      delete ov.startWork;
+      delete ov.finishWork;
+      delete ov.startRR;
+      delete ov.finishRR;
+      delete ov.dateOverridden;
+    }
+  }
+}
+
+function saveCellModal() {
+  pushUndoSnapshot();
+  const empId = parseInt(document.getElementById('modalEmpId').value, 10);
+  const dateStr = document.getElementById('modalDateStr').value;
+  const action = document.getElementById('modalActionType').value;
+  const customCode = document.getElementById('modalCustomCode').value.trim().toUpperCase();
+  const isH15 = document.getElementById('modalH15Check').checked;
+  const cmt = document.getElementById('modalComment').value.trim();
+  const emp = appState.employees.find(e => e.id === empId);
+  const shortName = getShortPossessiveName(emp);
+
+  if (!appState.transitions[empId]) appState.transitions[empId] = {};
+
+  let logChangeText = '';
+  if (action === 'CONTINUE') {
+    delete appState.transitions[empId][dateStr];
+    logChangeText = `${shortName}'s roster formula continue on ${formatDateLong(dateStr)}`;
+  } else if (action === 'STOP') {
+    appState.transitions[empId][dateStr] = 'STOP';
+    logChangeText = `${shortName}'s roster cleared from ${formatDateLong(dateStr)}`;
+  } else if (action === 'CUSTOM') {
+    const valid = customCode || 'W-01';
+    appState.transitions[empId][dateStr] = valid;
+    logChangeText = `${shortName}'s roster set ${valid} on ${formatDateLong(dateStr)}`;
+  } else {
+    // Standard option: 'W', 'BST', 'O', 'A', 'ORR', 'X'
+    appState.transitions[empId][dateStr] = action;
+    logChangeText = `${shortName}'s roster set ${action} on ${formatDateLong(dateStr)}`;
+  }
+
+  // If setting a status prefix P, check if there are any redundant seeds immediately downstream in the same group that it now bridges into
+  if (action !== 'CONTINUE' && action !== 'STOP') {
+    const newPrefix = (action === 'CUSTOM' ? customCode : action).split('-')[0].toUpperCase();
+    const startIdx = allDatesTimeline.indexOf(dateStr);
+    if (startIdx >= 0) {
+      for (let j = startIdx + 1; j < Math.min(startIdx + 60, allDatesTimeline.length); j++) {
+        const dNext = allDatesTimeline[j];
+        const sNext = appState.transitions[empId][dNext];
+        if (!sNext) continue;
+        if (sNext === 'STOP') break;
+        const nextPref = sNext.split('-')[0].toUpperCase();
+        if (nextPref === newPrefix && (sNext.endsWith('-01') || !sNext.includes('-'))) {
+          delete appState.transitions[empId][dNext];
+        } else {
+          break;
+        }
+      }
+    }
+  }
+
+  const key = `${empId}|${dateStr}`;
+  if (isH15) {
+    appState.h15Days[key] = true;
+    logChangeText += ' (Hari ke-15)';
+  } else {
+    delete appState.h15Days[key];
+  }
+
+  if (cmt) {
+    appState.comments[key] = cmt;
+    logChangeText += ` (Note: "${cmt}")`;
+  } else {
+    delete appState.comments[key];
+  }
+
+  // Update dates/roster on R&R balance for this rotation while keeping remarks
+  syncCalendarEditWithRROverrides(empId, dateStr);
+
+  recomputeDailyCache();
+  saveState(emp.fullName || emp.name, logChangeText);
+  renderCalendarTab();
+  renderEmployeeLedger();
+  closeCellModal();
+  showToast(logChangeText);
+}
+
+// ============================================================================
+// WINDOW 2: MASTER CALENDAR -> R&R BALANCE (2015–2030+)
+// ============================================================================
+function daysBetweenInclusive(d1, d2) {
+  if (!d1 || !d2) return 0;
+  const t1 = new Date(d1 + 'T00:00:00Z').getTime();
+  const t2 = new Date(d2 + 'T00:00:00Z').getTime();
+  if (isNaN(t1) || isNaN(t2) || t2 < t1) return 0;
+  return Math.round((t2 - t1) / 86400000) + 1;
+}
+
+function deriveCalendarRotations(empId) {
+  const daily = empDailyCache[empId] || {};
+  const blocks = [];
+  let curBlock = null;
+
+  for (let i = 0; i < allDatesTimeline.length; i++) {
+    const dStr = allDatesTimeline[i];
+    const cell = daily[dStr];
+    const prefix = cell ? cell.prefix : null;
+
+    const isWorkType = (prefix === 'W' || prefix === 'A' || prefix === 'ORR' || prefix === 'BST' || prefix === 'X');
+    const isRRType = (prefix === 'O');
+
+    if (isWorkType) {
+      const prevD = i > 0 ? allDatesTimeline[i - 1] : null;
+      const prevPrefix = (prevD && daily[prevD]) ? daily[prevD].prefix : null;
+      const shouldSplitNewWork = (curBlock && curBlock.type === 'WORK' && cell.code === 'W-01' && prevPrefix === 'W');
+
+      if (!curBlock || curBlock.type !== 'WORK' || shouldSplitNewWork) {
+        if (curBlock) blocks.push(curBlock);
+        curBlock = {
+          type: 'WORK',
+          startDate: dStr,
+          endDate: dStr,
+          alDays: 0,
+          orrDays: 0,
+          bstDays: 0,
+          xDays: 0,
+          h15Dates: [],
+          notes: []
+        };
+      } else {
+        curBlock.endDate = dStr;
+      }
+
+      if (prefix === 'A') curBlock.alDays += 1;
+      if (prefix === 'ORR') curBlock.orrDays += 1;
+      if (prefix === 'BST') curBlock.bstDays += 1;
+      if (prefix === 'X') curBlock.xDays += 1;
+      if (cell.isH15) curBlock.h15Dates.push(formatDateLong(dStr));
+      const cmt = appState.comments[`${empId}|${dStr}`];
+      if (cmt) curBlock.notes.push(cmt);
+    } else if (isRRType) {
+      if (!curBlock || curBlock.type !== 'RR' || cell.code === 'O-01') {
+        if (curBlock) blocks.push(curBlock);
+        curBlock = {
+          type: 'RR',
+          startDate: dStr,
+          endDate: dStr,
+          notes: []
+        };
+      } else {
+        curBlock.endDate = dStr;
+      }
+      const cmt = appState.comments[`${empId}|${dStr}`];
+      if (cmt) curBlock.notes.push(cmt);
+    } else {
+      if (curBlock) {
+        blocks.push(curBlock);
+        curBlock = null;
+      }
+    }
+  }
+  if (curBlock) blocks.push(curBlock);
+
+  const rotations = [];
+  let idx = 0;
+  while (idx < blocks.length) {
+    const b = blocks[idx];
+    if (b.type === 'WORK') {
+      const nextB = (idx + 1 < blocks.length && blocks[idx + 1].type === 'RR') ? blocks[idx + 1] : null;
+      const autoNotes = [...b.notes];
+      if (nextB && nextB.notes.length) autoNotes.push(...nextB.notes);
+      if (b.alDays > 0) autoNotes.push(`AL Used: ${b.alDays}d`);
+      if (b.orrDays > 0) autoNotes.push(`ORR Used: ${b.orrDays}d`);
+      if (b.xDays > 0) autoNotes.push(`X Leave: ${b.xDays}d`);
+      if (b.bstDays > 0) autoNotes.push(`BST: ${b.bstDays}d`);
+      if (b.h15Dates.length > 0) autoNotes.push(`Hari ke-15: ${b.h15Dates.join(', ')}`);
+
+      rotations.push({
+        key: `cal_${empId}_${b.startDate}`,
+        startWork: b.startDate,
+        finishWork: b.endDate,
+        startRR: nextB ? nextB.startDate : '',
+        finishRR: nextB ? nextB.endDate : '',
+        alAdded: 0,
+        alUsed: b.alDays,
+        orrUsed: b.orrDays,
+        tripSeq: '',
+        remarks: autoNotes.join('; ')
+      });
+      idx += nextB ? 2 : 1;
+    } else {
+      idx += 1;
+    }
+  }
+  return rotations;
+}
+
+// Find matching override entry for a derived rotation (matches exact key first, or nearby key within 14 days if startWork shifted on Calendar)
+function findMatchingOverride(empId, row, usedKeys) {
+  const overrides = (appState.rrOverrides && appState.rrOverrides[empId]) || {};
+  if (overrides[row.key]) {
+    usedKeys.add(row.key);
+    return overrides[row.key];
+  }
+  const tRowStart = new Date(row.startWork + 'T00:00:00Z').getTime();
+  for (const [k, ov] of Object.entries(overrides)) {
+    if (usedKeys.has(k)) continue;
+    const kDate = k.replace(`cal_${empId}_`, '');
+    const tKey = new Date(kDate + 'T00:00:00Z').getTime();
+    if (!isNaN(tKey) && Math.abs(tRowStart - tKey) <= 14 * 86400000) {
+      usedKeys.add(k);
+      // Migrate key to new row.key so future lookups stay aligned
+      overrides[row.key] = ov;
+      delete overrides[k];
+      return ov;
+    }
+  }
+  return {};
+}
+
+function buildCombinedLedger(empId) {
+  const emp = appState.employees.find(e => e.id === empId);
+  const calRots = deriveCalendarRotations(empId);
+  const manualRows = (appState.rrManualRows && appState.rrManualRows[empId]) || [];
+
+  const allRaw = [...calRots, ...manualRows];
+  const ratio = (emp.daysRest || 14) / (emp.daysWorking || 28);
+  const usedKeys = new Set();
+
+  let runningRR = emp.openingBalance || 0;
+  let runningAL = emp.openingAL || 0;
+  let currentYear = null;
+  let autoSeq = 0;
+
+  return allRaw.map((row) => {
+    const ov = row.isManual ? row : findMatchingOverride(empId, row, usedKeys);
+    const hasDateOverride = Boolean(ov.dateOverridden);
+
+    const startWork = (hasDateOverride && ov.startWork !== undefined) ? ov.startWork : row.startWork;
+    const finishWork = (hasDateOverride && ov.finishWork !== undefined) ? ov.finishWork : row.finishWork;
+    const startRR = (hasDateOverride && ov.startRR !== undefined) ? ov.startRR : row.startRR;
+    const finishRR = (hasDateOverride && ov.finishRR !== undefined) ? ov.finishRR : row.finishRR;
+
+    const workDays = daysBetweenInclusive(startWork, finishWork);
+    const rrEnt = Math.round(workDays * ratio * 100) / 100;
+    const rrTaken = (startRR && finishRR) ? daysBetweenInclusive(startRR, finishRR) : 0;
+
+    const alAdded = ov.alAdded !== undefined ? parseFloat(ov.alAdded || 0) : parseFloat(row.alAdded || 0);
+    const alUsed = row.alUsed || 0;
+    const orrUsed = row.orrUsed || 0;
+    const rrAdj = ov.rrAdj !== undefined ? parseFloat(ov.rrAdj || 0) : 0;
+
+    runningAL = Math.round((runningAL + alAdded - alUsed) * 100) / 100;
+    runningRR = Math.round((runningRR + rrEnt - rrTaken - orrUsed + rrAdj) * 100) / 100;
+
+    const rowYear = startWork ? startWork.slice(0, 4) : '';
+    if (rowYear && rowYear !== currentYear) {
+      currentYear = rowYear;
+      autoSeq = 1;
+    } else {
+      autoSeq += 1;
+    }
+
+    const tripSeq = (ov.tripSeq !== undefined && ov.tripSeq !== '') ? ov.tripSeq : (row.tripSeq || String(autoSeq));
+    const remarks = (ov.remarks !== undefined && ov.remarks !== '') ? ov.remarks : (row.remarks || '');
+
+    return {
+      key: row.key,
+      isManual: Boolean(row.isManual),
+      hasOverride: Boolean(ov.userEdited || ov.dateOverridden),
+      calStartWork: row.startWork,
+      calFinishWork: row.finishWork,
+      calStartRR: row.startRR,
+      calFinishRR: row.finishRR,
+      startWork,
+      finishWork,
+      workDays,
+      rrEnt,
+      startRR,
+      finishRR,
+      rrTaken,
+      alAdded,
+      alUsed,
+      alBalance: runningAL,
+      orrUsed,
+      rrAdj,
+      rrBalance: runningRR,
+      tripSeq,
+      remarks
+    };
+  });
+}
+
+function setRRYearFilter(mode) {
+  rrFilterMode = mode;
+  renderEmployeeLedger();
+}
+
+function populateLedgerSelect() {
+  const sel = document.getElementById('ledgerEmpSelect');
+  const prevVal = sel.value;
+  const activeEmps = appState.employees.filter(e => !e.resignedHidden);
+  sel.innerHTML = activeEmps.map(e =>
+    `<option value="${e.id}">${e.fullName || e.name} (${e.section})</option>`
+  ).join('');
+  if (prevVal && activeEmps.some(e => String(e.id) === String(prevVal))) {
+    sel.value = prevVal;
+  }
+}
+
+function renderEmployeeLedger() {
+  const currentYear = new Date().getFullYear();
+  const btnCur = document.getElementById('btnRRCurrentYear');
+  const btnAll = document.getElementById('btnRRAllYears');
+  if (btnCur) {
+    btnCur.textContent = `Show only ${currentYear}`;
+    btnCur.classList.toggle('btn-primary', rrFilterMode === 'CURRENT');
+  }
+  if (btnAll) {
+    btnAll.classList.toggle('btn-primary', rrFilterMode === 'ALL');
+  }
+
+  const sel = document.getElementById('ledgerEmpSelect');
+  if (!sel.options.length) populateLedgerSelect();
+  const empId = parseInt(sel.value || '1', 10);
+  const emp = appState.employees.find(e => e.id === empId);
+  if (!emp) return;
+
+  document.getElementById('metaDaysWorking').textContent = emp.daysWorking || 28;
+  document.getElementById('metaDaysRest').textContent = emp.daysRest || 14;
+  document.getElementById('metaCommDate').textContent = formatDateLong(emp.commencementDate);
+
+  let rows = buildCombinedLedger(empId);
+  if (rrFilterMode === 'CURRENT') {
+    const cyStr = String(currentYear);
+    rows = rows.filter(r =>
+      (r.startWork && r.startWork.startsWith(cyStr)) ||
+      (r.finishWork && r.finishWork.startsWith(cyStr)) ||
+      (r.startRR && r.startRR.startsWith(cyStr)) ||
+      (r.finishRR && r.finishRR.startsWith(cyStr))
+    );
+  }
+
+  const tbody = document.querySelector('#empLedgerTable tbody');
+  tbody.innerHTML = rows.map(r => {
+    const rrCls = r.rrBalance < 0 ? 'bal-neg' : 'bal-pos';
+    const alCls = r.alBalance < 0 ? 'bal-neg' : '';
+
+    let alBadges = [];
+    if (r.alAdded > 0) alBadges.push(`<span style="color:var(--ok); font-size:10.5px;">(+${r.alAdded} AL)</span>`);
+    if (r.alAdded < 0) alBadges.push(`<span style="color:var(--danger); font-size:10.5px;">(${r.alAdded} AL)</span>`);
+    if (r.alUsed > 0) alBadges.push(`<span style="color:#c084fc; font-size:10.5px;">(-${r.alUsed} used)</span>`);
+
+    let rrBadges = [];
+    if (r.rrAdj > 0) rrBadges.push(`<span style="color:var(--ok); font-size:10.5px;">(+${r.rrAdj} RR)</span>`);
+    if (r.rrAdj < 0) rrBadges.push(`<span style="color:var(--danger); font-size:10.5px;">(${r.rrAdj} RR)</span>`);
+    if (r.orrUsed > 0) rrBadges.push(`<span style="color:#38bdf8; font-size:10.5px;">(-${r.orrUsed} ORR)</span>`);
+
+    const overrideBadge = r.hasOverride ? `<span title="Edited in R&R Window" style="font-size:10px; background:#fef3c7; color:#92400e; padding:1px 4px; border-radius:3px; margin-left:4px;">R&amp;R Edit</span>` : '';
+
+    return `<tr>
+      <td style="white-space:nowrap;">${formatDateLong(r.startWork)}${overrideBadge}</td>
+      <td style="white-space:nowrap;">${formatDateLong(r.finishWork)}</td>
+      <td class="num">${r.workDays}</td>
+      <td class="num">${r.rrEnt}</td>
+      <td style="white-space:nowrap;">${r.startRR ? formatDateLong(r.startRR) : '—'}</td>
+      <td style="white-space:nowrap;">${r.finishRR ? formatDateLong(r.finishRR) : '—'}</td>
+      <td class="num">${r.rrTaken}</td>
+      <td class="num ${alCls}" style="white-space:nowrap;">
+        <strong>${r.alBalance}</strong>
+        ${alBadges.length ? ' ' + alBadges.join(' ') : ''}
+        <button class="btn btn-sm" style="margin-left:5px; padding:1px 5px;" onclick="quickAddAL('${r.key}')" title="Add Manual Annual Leave (e.g. +14)">+AL</button>
+      </td>
+      <td class="num ${rrCls}" style="white-space:nowrap;">
+        <strong>${r.rrBalance}</strong>
+        ${rrBadges.length ? ' ' + rrBadges.join(' ') : ''}
+        <button class="btn btn-sm" style="margin-left:5px; padding:1px 5px;" onclick="quickAddRR('${r.key}')" title="Adjust RR Balance (e.g. +1 or -1)">+RR</button>
+      </td>
+      <td style="text-align:center; font-weight:700;">${r.tripSeq}</td>
+      <td>${r.remarks || ''}</td>
+      <td style="white-space:nowrap;">
+        <button class="btn btn-sm" onclick="openEditRRRowModal('${r.key}')">Edit</button>
+        ${r.isManual ? `<button class="btn btn-sm btn-danger" onclick="deleteManualRRRow('${r.key}')">×</button>` : ''}
+      </td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="12" style="text-align:center;">No rotations found for this filter.</td></tr>`;
+}
+
+
+function quickAddRR(rowKey) {
+  const empId = parseInt(document.getElementById('ledgerEmpSelect').value, 10);
+  const emp = appState.employees.find(e => e.id === empId);
+  const rows = buildCombinedLedger(empId);
+  const row = rows.find(r => r.key === rowKey);
+  const curAdj = row ? (row.rrAdj || 0) : 0;
+  const defaultStr = curAdj !== 0 ? (curAdj > 0 ? `+${curAdj}` : String(curAdj)) : '+1';
+  const val = prompt('Enter manual RR Balance adjustment for this row (e.g. +1, +2.5, or -1):', defaultStr);
+  if (val === null) return;
+  const parsed = parseFloat(val.replace(/[^0-9.-]/g, '')) || 0;
+  pushUndoSnapshot();
+  if (row && row.isManual) {
+    const manList = appState.rrManualRows[empId] || [];
+    const targetMan = manList.find(m => m.key === rowKey);
+    if (targetMan) targetMan.rrAdj = parsed;
+  } else {
+    if (!appState.rrOverrides[empId]) appState.rrOverrides[empId] = {};
+    if (!appState.rrOverrides[empId][rowKey]) appState.rrOverrides[empId][rowKey] = {};
+    appState.rrOverrides[empId][rowKey].rrAdj = parsed;
+    appState.rrOverrides[empId][rowKey].userEdited = true;
+  }
+  saveState(emp.fullName || emp.name, `R&R Balance adjusted by ${parsed >= 0 ? '+' + parsed : parsed} RR days.`);
+  renderEmployeeLedger();
+  showToast(`Adjusted RR Balance (${parsed >= 0 ? '+' + parsed : parsed})`);
+}
+
+function quickAddAL(rowKey) {
+  const empId = parseInt(document.getElementById('ledgerEmpSelect').value, 10);
+  const emp = appState.employees.find(e => e.id === empId);
+  const shortName = getShortPossessiveName(emp);
+  const currentOv = (appState.rrOverrides[empId] && appState.rrOverrides[empId][rowKey]) || {};
+  const val = prompt('Enter manual Annual Leave addition for this row (e.g. +14):', currentOv.alAdded !== undefined ? `+${currentOv.alAdded}` : '+14');
+  if (val === null) return;
+  const parsed = parseFloat(val.replace(/[^0-9.-]/g, '')) || 0;
+  pushUndoSnapshot();
+  const rows = buildCombinedLedger(empId);
+  const row = rows.find(r => r.key === rowKey);
+  if (row && row.isManual) {
+    const targetMan = (appState.rrManualRows[empId] || []).find(m => m.key === rowKey);
+    if (targetMan) targetMan.alAdded = parsed;
+  } else {
+    if (!appState.rrOverrides[empId]) appState.rrOverrides[empId] = {};
+    if (!appState.rrOverrides[empId][rowKey]) appState.rrOverrides[empId][rowKey] = {};
+    appState.rrOverrides[empId][rowKey].alAdded = parsed;
+    appState.rrOverrides[empId][rowKey].userEdited = true;
+  }
+  saveState(emp.fullName || emp.name, `R&R Balance added ${parsed >= 0 ? '+' + parsed : parsed} Annual Leave.`);
+  renderEmployeeLedger();
+  showToast(`Updated Annual Leave (${parsed >= 0 ? '+' + parsed : parsed})`);
+}
+
+function openEditRRRowModal(rowKey) {
+  const empId = parseInt(document.getElementById('ledgerEmpSelect').value, 10);
+  const rows = buildCombinedLedger(empId);
+  const row = rows.find(r => r.key === rowKey);
+  if (!row) return;
+
+  document.getElementById('rrModalKey').value = rowKey;
+  document.getElementById('rrModalIsManual').value = row.isManual ? '1' : '0';
+  document.getElementById('rrModalTitle').textContent = 'Edit R&R Balance Row (R&R Window Only)';
+  document.getElementById('rrStartWork').value = row.startWork || '';
+  document.getElementById('rrFinishWork').value = row.finishWork || '';
+  document.getElementById('rrStartRR').value = row.startRR || '';
+  document.getElementById('rrFinishRR').value = row.finishRR || '';
+  document.getElementById('rrALInput').value = row.alAdded ? (row.alAdded > 0 ? `+${row.alAdded}` : String(row.alAdded)) : '0';
+  document.getElementById('rrAdjInput').value = row.rrAdj ? (row.rrAdj > 0 ? `+${row.rrAdj}` : String(row.rrAdj)) : '0';
+  document.getElementById('rrTripSeq').value = row.tripSeq || '';
+  document.getElementById('rrRemarks').value = row.remarks || '';
+  document.getElementById('rrResetCalBtn').style.display = row.hasOverride ? 'inline-flex' : 'none';
+  document.getElementById('rrRowModal').classList.add('open');
+}
+
+function openAddManualRRModal() {
+  document.getElementById('rrModalKey').value = 'NEW_MANUAL';
+  document.getElementById('rrModalIsManual').value = '1';
+  document.getElementById('rrModalTitle').textContent = 'Add Manual R&R Balance Row (R&R Window Only)';
+  document.getElementById('rrStartWork').value = '2026-10-15';
+  document.getElementById('rrFinishWork').value = '2026-11-11';
+  document.getElementById('rrStartRR').value = '2026-11-12';
+  document.getElementById('rrFinishRR').value = '2026-11-25';
+  document.getElementById('rrALInput').value = '0';
+  document.getElementById('rrAdjInput').value = '0';
+  document.getElementById('rrTripSeq').value = '';
+  document.getElementById('rrRemarks').value = '';
+  document.getElementById('rrResetCalBtn').style.display = 'none';
+  document.getElementById('rrRowModal').classList.add('open');
+}
+
+function closeRRRowModal() {
+  document.getElementById('rrRowModal').classList.remove('open');
+}
+
+function saveRRRowModal() {
+  pushUndoSnapshot();
+  const empId = parseInt(document.getElementById('ledgerEmpSelect').value, 10);
+  const emp = appState.employees.find(e => e.id === empId);
+  const shortName = getShortPossessiveName(emp);
+  const key = document.getElementById('rrModalKey').value;
+  const alRaw = document.getElementById('rrALInput').value.trim();
+  const alParsed = parseFloat(alRaw.replace(/[^0-9.-]/g, '')) || 0;
+  const rrAdjRaw = document.getElementById('rrAdjInput').value.trim();
+  const rrAdjParsed = parseFloat(rrAdjRaw.replace(/[^0-9.-]/g, '')) || 0;
+
+  const newSW = document.getElementById('rrStartWork').value;
+  const newFW = document.getElementById('rrFinishWork').value;
+  const newSR = document.getElementById('rrStartRR').value;
+  const newFR = document.getElementById('rrFinishRR').value;
+  const newSeq = document.getElementById('rrTripSeq').value.trim();
+  const newRem = document.getElementById('rrRemarks').value.trim();
+
+  if (key === 'NEW_MANUAL') {
+    if (!appState.rrManualRows[empId]) appState.rrManualRows[empId] = [];
+    appState.rrManualRows[empId].push({
+      key: `man_${empId}_${Date.now()}`,
+      isManual: true,
+      userEdited: true,
+      dateOverridden: true,
+      startWork: newSW,
+      finishWork: newFW,
+      startRR: newSR,
+      finishRR: newFR,
+      alAdded: alParsed,
+      rrAdj: rrAdjParsed,
+      alUsed: 0,
+      orrUsed: 0,
+      tripSeq: newSeq,
+      remarks: newRem
+    });
+    saveState(emp.fullName || emp.name, `R&R Balance added manual row (${formatDateLong(newSW)} to ${formatDateLong(newFR || newFW)}).`);
+  } else {
+    if (!appState.rrOverrides[empId]) appState.rrOverrides[empId] = {};
+    const rows = buildCombinedLedger(empId);
+    const curRow = rows.find(r => r.key === key);
+    const existingOv = appState.rrOverrides[empId][key] || {};
+
+    // Check if the user actually changed the dates away from the Calendar's dates
+    const datesChangedFromCal = curRow && (
+      newSW !== (curRow.calStartWork || '') ||
+      newFW !== (curRow.calFinishWork || '') ||
+      newSR !== (curRow.calStartRR || '') ||
+      newFR !== (curRow.calFinishRR || '')
+    );
+
+    const nextOv = {
+      ...existingOv,
+      userEdited: true,
+      alAdded: alParsed,
+      rrAdj: rrAdjParsed,
+      tripSeq: newSeq,
+      remarks: newRem
+    };
+
+    if (datesChangedFromCal) {
+      nextOv.dateOverridden = true;
+      nextOv.startWork = newSW;
+      nextOv.finishWork = newFW;
+      nextOv.startRR = newSR;
+      nextOv.finishRR = newFR;
+    }
+
+    appState.rrOverrides[empId][key] = nextOv;
+    saveState(emp.fullName || emp.name, `R&R Balance updated row (${formatDateLong(newSW)} to ${formatDateLong(newFR || newFW)}).`);
+  }
+
+  closeRRRowModal();
+  renderEmployeeLedger();
+  showToast('Saved to R&R Balance');
+}
+
+function resetRRRowToCalendar() {
+  pushUndoSnapshot();
+  const empId = parseInt(document.getElementById('ledgerEmpSelect').value, 10);
+  const emp = appState.employees.find(e => e.id === empId);
+  const shortName = getShortPossessiveName(emp);
+  const key = document.getElementById('rrModalKey').value;
+  if (appState.rrOverrides[empId]) {
+    delete appState.rrOverrides[empId][key];
+  }
+  saveState(emp.fullName || emp.name, `R&R Balance row reset to Master Calendar.`);
+  closeRRRowModal();
+  renderEmployeeLedger();
+  showToast('Row re-synced to Master Calendar');
+}
+
+function deleteManualRRRow(key) {
+  pushUndoSnapshot();
+  const empId = parseInt(document.getElementById('ledgerEmpSelect').value, 10);
+  const emp = appState.employees.find(e => e.id === empId);
+  const shortName = getShortPossessiveName(emp);
+  appState.rrManualRows[empId] = (appState.rrManualRows[empId] || []).filter(r => r.key !== key);
+  saveState(emp.fullName || emp.name, `R&R Balance manual row deleted.`);
+  renderEmployeeLedger();
+}
+
+// ============================================================================
+// WINDOW: MANAGE ENGINEERS (ADD, RENAME, HIDE)
+// ============================================================================
+function openEngineersModal() {
+  const ySel = document.getElementById('newEmpYear');
+  ySel.innerHTML = appState.years.map(y => `<option value="${y}" ${y === 2026 ? 'selected' : ''}>${y}</option>`).join('');
+  renderManageEngineersTable();
+  document.getElementById('engineersModal').classList.add('open');
+}
+
+function closeEngineersModal() {
+  document.getElementById('engineersModal').classList.remove('open');
+}
+
+function renderManageEngineersTable() {
+  const tbody = document.querySelector('#manageEngineersTable tbody');
+  tbody.innerHTML = appState.employees.map(emp => {
+    const startStr = formatDateLong(emp.commencementDate);
+    const statusBadge = emp.resignedHidden
+      ? `<span class="sec-tag" style="background:rgba(220,38,38,0.2); color:var(--danger);">Hidden (Resigned)</span>`
+      : `<span class="sec-tag" style="background:rgba(16,185,129,0.2); color:var(--ok);">Active</span>`;
+    const btnText = emp.resignedHidden ? 'Show Again' : 'Hide (Resigned)';
+    const btnCls = emp.resignedHidden ? 'btn-primary' : 'btn-danger';
+
+    return `<tr>
+      <td>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <input type="text" id="renameInput_${emp.id}" value="${emp.name.replace(/"/g, '&quot;')}" style="flex:1; font-weight:700;">
+          <button class="btn btn-sm btn-primary" onclick="renameEngineer(${emp.id})">Save Name</button>
+        </div>
+      </td>
+      <td><span class="sec-tag sec-${emp.section}">${emp.section}</span></td>
+      <td style="white-space:nowrap;">${startStr}</td>
+      <td>${statusBadge}</td>
+      <td style="white-space:nowrap;">
+        <button class="btn btn-sm ${btnCls}" onclick="toggleResignedEngineer(${emp.id})">${btnText}</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function renameEngineer(empId) {
+  const inp = document.getElementById(`renameInput_${empId}`);
+  if (!inp) return;
+  const newName = inp.value.trim();
+  if (!newName) {
+    alert('Engineer name cannot be empty.');
+    return;
+  }
+  const emp = appState.employees.find(e => e.id === empId);
+  if (!emp || emp.name === newName) return;
+  pushUndoSnapshot();
+  const oldName = emp.fullName || emp.name;
+  emp.name = newName;
+  emp.fullName = newName;
+  // Automatically update linked birthday name as well
+  if (appState.birthdays) {
+    for (const b of appState.birthdays) {
+      if (b.empId === empId) b.name = newName;
+    }
+  }
+  saveState('System', `Renamed engineer "${oldName}" to "${newName}".`);
+  renderSelectorPanel();
+  renderCalendarTab();
+  populateLedgerSelect();
+  renderEmployeeLedger();
+  renderManageEngineersTable();
+  showToast(`Saved name: ${newName}`);
+}
+
+function addNewEngineer() {
+  const name = document.getElementById('newEmpName').value.trim();
+  if (!name) {
+    alert('Please enter the engineer name.');
+    return;
+  }
+  const section = document.getElementById('newEmpSection').value;
+  const startMonth = parseInt(document.getElementById('newEmpMonth').value, 10);
+  const startYear = parseInt(document.getElementById('newEmpYear').value, 10);
+  const startDay = Math.min(Math.max(parseInt(document.getElementById('newEmpDay').value || '1', 10), 1), daysInMonth(startYear, startMonth));
+  const autoSeed = document.getElementById('newEmpAutoSeed').checked;
+
+  pushUndoSnapshot();
+  const nextId = Math.max(...appState.employees.map(e => e.id), 0) + 1;
+  const commDate = `${startYear}-${String(startMonth).padStart(2, '0')}-${String(startDay).padStart(2, '0')}`;
+
+  const newEmp = {
+    id: nextId,
+    code: name.replace(/[^A-Za-z0-9]/g, '').slice(0, 10),
+    name,
+    fullName: name,
+    section,
+    checkboxGroup: section,
+    commencementDate: commDate,
+    startYear,
+    startMonth,
+    daysWorking: 28,
+    daysRest: 14,
+    openingBalance: 0,
+    openingAL: 0,
+    visible: true,
+    resignedHidden: false
+  };
+
+  appState.employees.push(newEmp);
+  appState.transitions[nextId] = {};
+
+  if (autoSeed) {
+    appState.transitions[nextId][commDate] = 'W-01';
+  }
+
+  if (!filterState.years.includes(startYear)) {
+    filterState.years.push(startYear);
+    filterState.years.sort((a, b) => a - b);
+  }
+  if (appState.hiddenYears && appState.hiddenYears.includes(startYear)) {
+    appState.hiddenYears = appState.hiddenYears.filter(y => y !== startYear);
+  }
+
+  document.getElementById('newEmpName').value = '';
+  recomputeDailyCache();
+  saveState(name, `Added new ${section} engineer starting ${formatDateLong(commDate)}.`);
+  initActiveUserPicker();
+  renderSelectorPanel();
+  renderCalendarTab();
+  populateLedgerSelect();
+  renderManageEngineersTable();
+  showToast(`Added ${name} (${section})`);
+}
+
+function toggleResignedEngineer(empId) {
+  pushUndoSnapshot();
+  const emp = appState.employees.find(e => e.id === empId);
+  if (!emp) return;
+  emp.resignedHidden = !emp.resignedHidden;
+  saveState(emp.fullName || emp.name, emp.resignedHidden ? 'Hidden engineer (Resigned/Inactive).' : 'Restored engineer to active view.');
+  renderSelectorPanel();
+  renderCalendarTab();
+  populateLedgerSelect();
+  renderEmployeeLedger();
+  renderManageEngineersTable();
+  showToast(emp.resignedHidden ? `Hidden ${emp.name}` : `Shown ${emp.name}`);
+}
+
+// ============================================================================
+// WINDOW: HOLIDAY & BIRTHDAY ADDITION MODAL (CALENDAR FORMAT)
+// ============================================================================
+function openHolidaysModal() {
+  holModalState.year = filterState.years[0] || 2026;
+  holModalState.month = filterState.months[0] || 1;
+  holModalState.selectedDate = `${holModalState.year}-${String(holModalState.month).padStart(2, '0')}-01`;
+
+  const mSel = document.getElementById('holCalMonth');
+  mSel.innerHTML = MONTH_FULL.map((m, i) => `<option value="${i + 1}">${m}</option>`).join('');
+  mSel.value = String(holModalState.month);
+
+  const ySel = document.getElementById('holCalYear');
+  ySel.innerHTML = appState.years.map(y => `<option value="${y}">${y}</option>`).join('');
+  ySel.value = String(holModalState.year);
+
+  renderHolidayCalendarModal();
+  selectHolidayDate(holModalState.selectedDate);
+  document.getElementById('holidaysModal').classList.add('open');
+}
+
+function closeHolidaysModal() {
+  document.getElementById('holidaysModal').classList.remove('open');
+}
+
+function shiftHolidayCalMonth(delta) {
+  let m = parseInt(document.getElementById('holCalMonth').value, 10) + delta;
+  let y = parseInt(document.getElementById('holCalYear').value, 10);
+  if (m < 1) { m = 12; y -= 1; }
+  if (m > 12) { m = 1; y += 1; }
+  if (!appState.years.includes(y)) {
+    appState.years.push(y);
+    appState.years.sort((a, b) => a - b);
+    ensureFixedHolidaysForYear(y);
+    buildTimelineDates();
+    recomputeDailyCache();
+  }
+  const ySel = document.getElementById('holCalYear');
+  ySel.innerHTML = appState.years.map(yr => `<option value="${yr}">${yr}</option>`).join('');
+  document.getElementById('holCalMonth').value = String(m);
+  document.getElementById('holCalYear').value = String(y);
+  renderHolidayCalendarModal();
+}
+
+function renderHolidayCalendarModal() {
+  const month = parseInt(document.getElementById('holCalMonth').value, 10);
+  const year = parseInt(document.getElementById('holCalYear').value, 10);
+  holModalState.month = month;
+  holModalState.year = year;
+
+  const numDays = daysInMonth(year, month);
+  const firstDow = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
+  const mStr = String(month).padStart(2, '0');
+
+  let html = DOW_NAMES.map(d => `<div class="hol-cal-dow">${d}</div>`).join('');
+  for (let b = 0; b < firstDow; b++) {
+    html += `<div></div>`;
+  }
+
+  for (let d = 1; d <= numDays; d++) {
+    const dStr = `${year}-${mStr}-${String(d).padStart(2, '0')}`;
+    const holName = appState.holidays[dStr] || '';
+    const bdays = getActiveBirthdaysOnDate(dStr);
+    const isSel = (holModalState.selectedDate === dStr) ? 'selected-day' : '';
+    // Priority: Birthday (Yellow) > Holiday (Red)
+    const colorCls = bdays.length > 0 ? 'is-bday' : (holName ? 'is-hol' : '');
+    const displayLabel = [
+      bdays.length ? `🎂 ${bdays.join(', ')}` : '',
+      holName ? `${holName}` : ''
+    ].filter(Boolean).join(' • ');
+
+    html += `
+      <div class="hol-cal-day ${colorCls} ${isSel}" onclick="selectHolidayDate('${dStr}')">
+        <div style="font-weight:800;">${d}</div>
+        <div class="hol-day-name">${displayLabel}</div>
+      </div>
+    `;
+  }
+  document.getElementById('holCalendarGrid').innerHTML = html;
+
+  document.getElementById('holListYearLabel').textContent = String(year);
+
+  // Combine active birthdays and holidays in the selected year
+  const combinedItems = [];
+  for (const b of (appState.birthdays || [])) {
+    if (b.empId !== null && b.empId !== undefined) {
+      const emp = appState.employees.find(e => e.id === b.empId);
+      if (!emp || emp.resignedHidden) continue;
+      combinedItems.push({
+        dt: `${year}-${b.mmdd}`,
+        type: 'BIRTHDAY',
+        name: emp.fullName || emp.name || b.name,
+        bdayId: b.id
+      });
+    } else {
+      combinedItems.push({
+        dt: `${year}-${b.mmdd}`,
+        type: 'BIRTHDAY',
+        name: b.name,
+        bdayId: b.id
+      });
+    }
+  }
+  for (const [dt, name] of Object.entries(appState.holidays)) {
+    if (dt.startsWith(String(year))) {
+      combinedItems.push({
+        dt,
+        type: 'HOLIDAY',
+        name
+      });
+    }
+  }
+  combinedItems.sort((a, b) => a.dt.localeCompare(b.dt));
+
+  const tbody = document.querySelector('#holidaysListTable tbody');
+  tbody.innerHTML = combinedItems.map(item => {
+    const typeBadge = item.type === 'BIRTHDAY'
+      ? `<span class="sec-tag" style="background:#facc15; color:#0f172a;">🎂 Birthday</span>`
+      : `<span class="sec-tag" style="background:#dc2626; color:#fff;">🎉 Holiday</span>`;
+    const delAction = item.type === 'BIRTHDAY'
+      ? `deleteBirthdayById('${item.bdayId}')`
+      : `deleteHolidayByDate('${item.dt}')`;
+    return `
+      <tr>
+        <td style="white-space:nowrap; font-weight:700; cursor:pointer;" onclick="jumpToHolidayDate('${item.dt}')">${formatDateLong(item.dt)}</td>
+        <td>${typeBadge}</td>
+        <td>${item.name}</td>
+        <td style="text-align:right;">
+          <button class="btn btn-sm btn-danger" onclick="${delAction}">Delete</button>
+        </td>
+      </tr>
+    `;
+  }).join('') || `<tr><td colspan="4" style="text-align:center;">No birthdays or holidays recorded for ${year}.</td></tr>`;
+}
+
+function selectHolidayDate(dStr) {
+  holModalState.selectedDate = dStr;
+  document.getElementById('holSelectedDateInput').value = dStr;
+  document.getElementById('holSelectedDateLabel').textContent = formatDateLong(dStr);
+  const existing = appState.holidays[dStr] || '';
+  document.getElementById('holNameInput').value = existing;
+  document.getElementById('holDeleteBtn').style.display = existing ? 'inline-flex' : 'none';
+  renderHolidayCalendarModal();
+}
+
+function jumpToHolidayDate(dStr) {
+  const y = parseInt(dStr.slice(0, 4), 10);
+  const m = parseInt(dStr.slice(5, 7), 10);
+  document.getElementById('holCalYear').value = String(y);
+  document.getElementById('holCalMonth').value = String(m);
+  selectHolidayDate(dStr);
+}
+
+function saveHolidayFromModal() {
+  const dStr = document.getElementById('holSelectedDateInput').value;
+  const name = document.getElementById('holNameInput').value.trim();
+  if (!dStr) return;
+  if (!name) {
+    alert('Please enter a holiday name.');
+    return;
+  }
+  pushUndoSnapshot();
+  appState.holidays[dStr] = name;
+  if (appState.deletedFixedHolidays) delete appState.deletedFixedHolidays[dStr];
+  saveState('System', `Added holiday "${name}" on ${formatDateLong(dStr)}.`);
+  selectHolidayDate(dStr);
+  renderCalendarTab();
+  showToast(`Saved holiday on ${formatDateLong(dStr)}`);
+}
+
+function addBirthdayOnSelectedDate() {
+  const dStr = document.getElementById('holSelectedDateInput').value;
+  const name = document.getElementById('bdayNameInput').value.trim();
+  if (!dStr || !name) {
+    alert('Please enter the person\'s complete name for the birthday.');
+    return;
+  }
+  pushUndoSnapshot();
+  const mmdd = dStr.slice(5, 10);
+  if (!appState.birthdays) appState.birthdays = [];
+  appState.birthdays.push({
+    id: 'bday_custom_' + Date.now(),
+    mmdd,
+    empId: null,
+    name
+  });
+  document.getElementById('bdayNameInput').value = '';
+  saveState('System', `Added recurring birthday for ${name} on ${formatDateLong(dStr).slice(0, -5)}.`);
+  selectHolidayDate(dStr);
+  renderCalendarTab();
+  showToast(`Added birthday for ${name}`);
+}
+
+function deleteBirthdayById(bdayId) {
+  const target = (appState.birthdays || []).find(b => b.id === bdayId);
+  if (!target) return;
+  pushUndoSnapshot();
+  appState.birthdays = appState.birthdays.filter(b => b.id !== bdayId);
+  saveState('System', `Removed birthday for ${target.name}.`);
+  renderHolidayCalendarModal();
+  renderCalendarTab();
+  showToast(`Removed birthday for ${target.name}`);
+}
+
+function deleteSelectedHoliday() {
+  const dStr = document.getElementById('holSelectedDateInput').value;
+  if (!dStr) return;
+  deleteHolidayByDate(dStr);
+}
+
+function deleteHolidayByDate(dStr) {
+  const old = appState.holidays[dStr];
+  if (!old) return;
+  pushUndoSnapshot();
+  delete appState.holidays[dStr];
+  if (!appState.deletedFixedHolidays) appState.deletedFixedHolidays = {};
+  appState.deletedFixedHolidays[dStr] = true;
+  saveState('System', `Deleted holiday "${old}" on ${formatDateLong(dStr)}.`);
+  selectHolidayDate(dStr);
+  renderCalendarTab();
+  showToast(`Deleted holiday on ${formatDateLong(dStr)}`);
+}
+
+// ============================================================================
+// WINDOW 3: AUDIT LOGS (WITH TODAY / THIS MONTH / ALL FILTERS & USER FORMAT)
+// ============================================================================
+function setAuditFilter(mode) {
+  auditFilterMode = mode;
+  renderAuditLog();
+}
+
+function renderAuditLog() {
+  document.getElementById('btnAuditToday').classList.toggle('btn-primary', auditFilterMode === 'TODAY');
+  document.getElementById('btnAuditMonth').classList.toggle('btn-primary', auditFilterMode === 'MONTH');
+  document.getElementById('btnAuditAll').classList.toggle('btn-primary', auditFilterMode === 'ALL');
+
+  const todayIso = todayIsoLocal();
+  const thisMonthIso = todayIso.slice(0, 7);
+
+  let logs = appState.auditLog || [];
+  if (auditFilterMode === 'TODAY') {
+    logs = logs.filter(l => (l.dateIso || (l.ts && l.ts.slice(0, 10))) === todayIso);
+  } else if (auditFilterMode === 'MONTH') {
+    logs = logs.filter(l => (l.dateIso || (l.ts && l.ts.slice(0, 10)) || '').slice(0, 7) === thisMonthIso);
+  }
+
+  const tbody = document.querySelector('#auditLogTable tbody');
+  if (!tbody) return;
+  tbody.innerHTML = logs.map(l => `
+    <tr>
+      <td style="white-space:nowrap; color:var(--text-muted); font-size:11.5px;">${l.ts || ''}</td>
+      <td style="font-weight:700; white-space:nowrap;">${l.target || 'System'}</td>
+      <td>${l.msg}</td>
+    </tr>
+  `).join('') || `<tr><td colspan="3" style="text-align:center; padding:16px; color:var(--text-muted);">No audit logs found for this filter.</td></tr>`;
+}
+
+function clearAuditLog() {
+  appState.auditLog = [];
+  saveState('Cleared audit logs.');
+  renderAuditLog();
+}
+
+function switchTab(tabId, btnEl) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  btnEl.classList.add('active');
+  if (tabId === 'ledger') {
+    populateLedgerSelect();
+    renderEmployeeLedger();
+  }
+  if (tabId === 'audit') {
+    renderAuditLog();
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  applyTheme();
+  initActiveUserPicker();
+  buildTimelineDates();
+  recomputeDailyCache();
+  renderSelectorPanel();
+  renderCalendarTab();
+  populateLedgerSelect();
+  renderEmployeeLedger();
+  renderAuditLog();
+  updateUndoButton();
+  updateRedoButton();
+  initActiveUserPicker();
+  initServerSync();
+});
+</script>
+</body>
+</html>
